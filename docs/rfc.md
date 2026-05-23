@@ -1,94 +1,36 @@
 # RFC: Architecture & Design
 
-## 两层架构
+## 三层金字塔
 
-流程层（skill）和展示层（website）解耦。换一个领域只需替换 data 文件，组件不变。
+网站按三层组织：底层是原文图书馆（消除语言障碍），中层是直觉地图（降低认知负担），顶层是思维辅助（帮助形成判断）。三层独立可扩展，分别对应不同的读者需求和构建流程。
 
-```
-field_map_bootstrap skill (rules/skills/)
-  seed → research → synthesis → FieldMap data
-       │
-       ▼
-FieldMap data (frontend/src/data/)
-       │
-       ▼
-React + Vite static site (frontend/)
-```
+## 流程层与展示层
+
+流程层（`skills/field_map_bootstrap.md`）和展示层（`frontend/`）解耦。Seed → 原文翻译 → 追踪引用 → 深度调研 → 分析合成 → FieldMap 数据 → 静态站点。
 
 ## Tech stack
 
-- Frontend: React + Vite + TypeScript — component-based, static output
-- Backend: FastAPI — serves built frontend in production; dev 时 Vite dev server 独立运行
-- Styling: Plain CSS with custom properties — 设计意图在 CSS 里可见
-- Data: TypeScript object literal — 类型安全、零解析开销
-- Deployment: GitHub Pages 或任意 static host
+- Frontend: React + Vite + TypeScript
+- Styling: Plain CSS with custom properties
+- Data: TypeScript object literal（类型安全、零解析开销）
+- Translation: DeepSeek V4 Flash API batch parallel
+- Deployment: GitHub Pages, `base: '/ai-self-evolution-landscape/'`
 
 ## 为什么不是 X
 
-- Not plain HTML: 需要组件复用和类型检查
-- Not Tailwind: 设计决策在 CSS 里比 utility class soup 更可维护
-- Not Next.js: 无 SSR、无路由、无 API
+- Not Tailwind: 设计决策在 CSS custom properties 里显式可见
 - Not a CMS: 数据量小、一人编辑、git 版本控制
+- Translation not manual: 25 篇文章人工翻译不现实
 
-## FieldMap 数据模型
+## 关键设计决策
 
-```typescript
-interface FieldMap {
-  field: string;
-  overview: string;
-  lastUpdated: string;
-  regions: Region[];
-  tensions: Tension[];
-  readingPath: ReadingPath;
-}
-
-interface Region {
-  id: string;
-  title: string;
-  thesis: string;
-  intuitions: Intuition[];
-  pros: string[];
-  cons: string[];
-  articles: ArticleRef[];
-}
-
-interface Intuition {
-  text: string;
-  type: 'fact' | 'opinion';
-  sources: number[];
-}
-
-interface ArticleRef {
-  title: string;
-  url: string;
-  relevance: string;
-  tier: 'primary' | 'supporting' | 'counterpoint';
-}
-
-interface Tension {
-  question: string;
-  positions: { side: string; argument: string }[];
-  status: 'active' | 'emerging' | 'resolved';
-}
-
-interface ReadingPath {
-  ifYouHave5Min: string[];
-  ifYouHave30Min: string[];
-}
-```
+- `translatedUrl` 为可选字段，有则优先中文链接，附原文链接
+- fact/opinion 标注规则：包含因果推断、价值判断、预测的陈述均为 opinion
+- Region 分类轴为"机制"（自对弈/进化搜索 vs 自修改架构 vs Agentic 自研究）而非混用多条轴
+- Tension 为 source-backed 争论，非 agent 自造
 
 ## Visual architecture
 
-- Layout: single column, max-width ~720px, centered
-- Navigation: sticky top bar, region anchors + tensions + reading path
-- Regions: visually distinct blocks, thesis as section header
-- Intuitions: listed with fact/opinion badge, compact source annotation
-- Articles: compact reference cards within each region
-- Tensions: debate format with positions side by side
-- Typography: system font stack, CJK-friendly line height
-- Color: neutral warm-gray base, one accent; no dark mode default
-- Mobile: single column stacks naturally
-
-## Extensibility
-
-Adding a new field: replace `frontend/src/data/fieldMap.ts`, rebuild. Adding features (timeline, relationship graph): extend components, data model stays stable.
+- 单栏 720px，暖白底色，深棕标题，琥珀强调
+- Intuition 标注 fact/opinion badge
+- Article links 优先中文（translatedUrl），附"原文"链接
