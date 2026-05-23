@@ -24,6 +24,29 @@
 - 启动 7 个并行 sub-agent：4 个逐篇读 19 篇文章 + 3 个深层调研
 - 建 tmp/session_20260522/ 存放中间产物
 
+## 2026-05-22 — Phase 2: 提取和精炼 Intuition
+
+- 7 个并行 sub-agent 全部完成：4 个逐篇读 19 篇文章 + 3 个深层调研（RSI landscape、技术深度、产业事实）
+- 关键新发现：
+  - 7 个学派（不仅 pro/con）：连续派、效率派、开放式进化派、爆炸派、经济约束派、对齐工程派、情境智能派
+  - 4 个新 Tension：连续性 vs 飞跃、个体 vs 分布式智能、元认知 vs 任务级改进、能力增益 vs 对齐漂移
+  - AlphaEvolve 的自指性循环已部分闭合（优化训练自身的 Gemini 内核）
+  - 可验证性约束是所有方法的共有限制
+  - Recursive 全明星团队细节（ViT 作者、POET 作者、DeepMind 开放式进化负责人等）
+  - Recursive $650M/$4.65B，成立 4 个月零产品
+  - Darwin Godel Machine：首个显式修改自身修改机制的系统（SWE-bench 20%→50%）
+  - CodeEvolve 开源复现已超越 AlphaEvolve 在 4 个问题上
+- 更新 fieldMap.ts：
+  - 6 个 Region 全部重写 thesis 和 intuition——基于调研证据而非 seed 推测
+  - 新增 15 条 Intuition（fact/opinion 标注）
+  - 新增 25 篇 reference articles（tier 标注）
+  - 新增 2 个 Tension（连续性 vs 飞跃、个体 vs 分布式），原 2 个深化为包含中间立场
+  - 更新 reading path 适配新 intuition
+- 重命名"算法发现"→"算法自动发现与基础设施优化"
+- 重命名"持续学习"→"持续学习与自修改架构"，加入 DGM
+- "产业前沿"加入 SSI、Ricursive、大实验室内部项目
+- "质疑与边界"加入 Lambert LSI、Harjas 技术树、Ball 分布式知识
+
 ## 设计决策
 
 - React + Vite 而非 Python 静态生成器：gh-pages 支持更好
