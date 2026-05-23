@@ -60,9 +60,9 @@ const fieldMap: FieldMap = {
       thesis: '自进化的思想起源于 1965 年 I.J. Good 的"智能爆炸"假设：足够智能的 AI 可以设计比自己更智能的后继者。但 Good 的论证是纯演绎的——它假设 ultraintelligent machine 已存在，未讨论它能否被造出来。',
       intuitions: [
         { id: 'conceptual-origins-1', text: 'Good 的原始论证："第一个 ultraintelligent machine 是人类的最后一项发明"——之后机器会接手。但论证纯演绎，不含数据或形式证明。', type: 'fact', sources: [0] },
-        { id: 'conceptual-origins-2', text: 'MIRI 的风险框架：不声称智能爆炸必然发生，但认为后果极其重大值得提前研究。核心 concern 是 competence（能力）而非 malevolence（恶意）：一个 competent 但目标与人类不一致的系统是主要威胁。', type: 'opinion', sources: [1] },
+        { id: 'conceptual-origins-2', text: 'MIRI 的风险框架：不声称智能爆炸必然发生，但认为后果极其重大值得提前研究。他们的核心担忧不是 AI “有恶意”，而是 AI “太有能力”但目标与人类不一致——就像一个极度聪明但价值观和你完全不同的人，不需要故意害你，光是按自己的目标高效行事就可能伤害你。', type: 'opinion', sources: [1] },
         { id: 'conceptual-origins-3', text: 'AI 研究者对"何时"没有共识。2011 Oxford 会议中位数预计 2050 年 50% 概率有 HLMI，但 41% 的 AI@50 参会者认为机器智能永远不会达到人类水平。预测本身的分散程度就是一个值得注意的信号——如果专家都不能收敛，任何单一预测都不可靠。', type: 'opinion', sources: [1] },
-        { id: 'conceptual-origins-4', text: 'Yudkowsky 对 Chollet 的反驳：No Free Lunch 定理在此不适用——我们生活在归纳有效的低熵宇宙。AlphaGo Zero 三天内超越人类几世纪围棋知识，证明单个系统可以超越分布式人类智慧的积累。', type: 'opinion', sources: [3] },
+        { id: 'conceptual-origins-4', text: 'Yudkowsky 对 Chollet 的反驳："没有免费午餐"定理（没有一个算法在所有问题上都最好）在此不适用——我们生活在一个有规律可循的世界里，归纳法是有效的。AlphaGo Zero 三天内超越人类几世纪围棋知识，证明单个系统可以超越分布式人类智慧的积累。', type: 'opinion', sources: [3] },
       ],
       pros: ['逻辑简洁：如果 AI 能改进自己，循环就闭合了', 'AlphaGo Zero 等案例提供实证支撑', '为后续工程探索提供概念地基'],
       cons: ['Good 的论证是纯演绎，无经验数据', '专家预测高度分散——"何时"而非"是否"才是真正未知', '历史 AI 预测屡次落空：1956 年预计一个夏天解决视觉'],
@@ -88,7 +88,7 @@ const fieldMap: FieldMap = {
         { id: 'evolutionary-search-4', text: 'AlphaEvolve 最被低估的特征是自指性：它优化了 Gemini 训练内核，而 Gemini 正是 AlphaEvolve 内部的 LLM——AI 在加速训练自己的组件。循环已闭合但范围窄（仅限特定内核）。1% 训练时间节省在多代训练中产生复利。', type: 'opinion', sources: [3, 4] },
         { id: 'evolutionary-search-5', text: 'AutoML-Zero (2020) 是学术前身——从基本数学运算进化出 SGD 和反向传播，证明了"去除人类先验后算法可被重新发现"。但它的遗产不是方法本身（从零搜索太慢），而是"不那么人类先验的搜索空间可以发现人类未想到的解"这个洞察——这正是 AlphaEvolve 用 LLM 做搜索引导后实现的。', type: 'opinion', sources: [5, 6] },
         { id: 'evolutionary-search-6', text: '可验证性约束（verifiability constraint）：DeepMind 论文自述"需要自动化评估指标，排除了需要人工实验的任务"。这是整个进化搜索路线的根限——战略规划、创意工作、开放科学推理等没有清晰"好坏"标准的领域，连选择压力都无法建立。AlphaEvolve 的 2026 扩展（基因组学、量子、物流）都是可量化验证的领域，不是随机挑选的——它们恰好属于"有评估器"的子集。', type: 'opinion', sources: [3, 7] },
-        { id: 'evolutionary-search-7', text: '开源复现已超越 AlphaEvolve 在部分问题上。方法论优势在工程规模和应用广度而非模型质量——技术壁垒有限。同时 AlphaEvolve 不修改自己的搜索过程（LLM 集合、prompt 采样、MAP-Elites 数据库都是人工设计的固定组件），不是完整意义上的递归自改进。', type: 'opinion', sources: [8, 9] },
+        { id: 'evolutionary-search-7', text: '开源复现已超越 AlphaEvolve 在部分问题上。方法论优势在工程规模和应用广度而非模型质量——技术壁垒有限。同时 AlphaEvolve 不修改自己的搜索过程（LLM 集合、prompt 采样、MAP-Elites 多样性存档（一种保留多样而非仅保留最优的搜索算法）都是人工设计的固定组件），不是完整意义上的递归自改进。', type: 'opinion', sources: [8, 9] },
         { id: 'evolutionary-search-8', text: '一条被早期版本忽略的关键路线：RL with Verifiers。OpenAI o1 和 DeepSeek R1 用规则验证器（数学答案正确性、代码测试通过）作为 RL 奖励信号，直接优化模型权重的推理能力。不同于 AlphaEvolve 的进化搜索（固定 pipeline 内生候选→外部评估），RL with Verifiers 属于"梯度层自改进"。STaR (2022) 是前身——模型对自己生成的推理链自评自训。这条路线和进化搜索互补：前者适合"有答案可验证"的推理任务，后者适合"有评估器可打分"的优化问题。', type: 'fact', sources: [10] },
       ],
       pros: [
@@ -159,7 +159,7 @@ const fieldMap: FieldMap = {
         { id: 'agentic-auto-research-1', text: 'Sakana AI "The AI Scientist" (Nature, 2026 年 3 月) 是首批完整闭环系统：四个阶段——idea 生成（用 Semantic Scholar 做新颖性过滤）、实验执行（tree search 调试自己的代码）、论文撰写（LaTeX + 自动引用匹配 20 轮）、自动同行评审（5-reviewer ensemble）。其中一篇论文在 ICLR workshop 获得 human reviewer 评分 6.33/10，超过接受阈值。', type: 'fact', sources: [0] },
         { id: 'agentic-auto-research-2', text: 'Google AI Co-Scientist (2025) 是多 agent 系统：Generation、Reflection、Ranking、Evolution、Proximity、Meta-review 六种 agent 组成自改进 tournament。采用 Elo 自动评估来校准推理质量。三项实验室验证结果：急性髓系白血病药物重定位（确认肿瘤抑制效果）、肝纤维化靶点发现（与 Stanford 合作）、抗菌素耐药性机制（独立提出后被实验证实，发表于 Cell）。', type: 'fact', sources: [1] },
         { id: 'agentic-auto-research-3', text: 'Meta HyperAgents / DGM-H (2026) 是目前最清晰的元认知自改进实例。核心创新：元级修改过程本身可编辑——系统不仅改进输出，还进化改进过程。在运行中自发产生了性能追踪系统、持久化记忆和计算规划机制——这些都不是预先指定的。元级改进跨域迁移：在 coding 中学到的改进策略加速了 robotics 和 math grading 的自我提升。', type: 'fact', sources: [2] },
-        { id: 'agentic-auto-research-4', text: 'Agentic 系统和进化搜索系统的根本区别：AlphaEvolve 在固定 pipeline（LLM 生成→自动评估→保留最优）中搜索解——它的 LLM 集合、prompt 采样和 MAP-Elites 数据库都是人工设计的固定组件。Agentic 系统自主规划多阶段工作流、在阶段间传递状态、用反馈修订计划、在某些情况下自行生成评估标准。前者是"在给定空间内优化"，后者是"自己决定要做什么"。', type: 'opinion', sources: [0, 2] },
+        { id: 'agentic-auto-research-4', text: 'Agentic 系统和进化搜索系统的根本区别：AlphaEvolve 在固定 pipeline（LLM 生成→自动评估→保留最优）中搜索解——它的 LLM 集合、prompt 采样和 MAP-Elites 多样性存档（一种保留多样而非仅保留最优的搜索算法）都是人工设计的固定组件。Agentic 系统自主规划多阶段工作流、在阶段间传递状态、用反馈修订计划、在某些情况下自行生成评估标准。前者是"在给定空间内优化"，后者是"自己决定要做什么"。', type: 'opinion', sources: [0, 2] },
         { id: 'agentic-auto-research-5', text: 'Analemma 的 FARS (Fully Automated Research System, 2026) 代表了工业化尺度：166 篇 ML 论文在 417 小时内完成，约 $1,100/篇。Google PaperOrchestra 则从研究员的原始实验日志自动生成投稿级论文，在 11 位 AI 研究者的盲评中超过现有系统。这两个案例表明自动研究的吞吐量已经进入生产级。', type: 'fact', sources: [3] },
       ],
       pros: [
@@ -188,7 +188,7 @@ const fieldMap: FieldMap = {
       thesis: '2026 年 5 月 Recursive Superintelligence 以 6.5 亿美元融资标志自进化 AI 成为赛道。但公司成立仅 4 个月、不到 30 人、零产品——纯粹团队+叙事押注。大实验室（OpenAI/Anthropic/DeepMind）的内部项目可能进展更深，但不透明。',
       intuitions: [
         { id: 'industry-frontier-1', text: 'Recursive 全明星团队：CEO Richard Socher（You.com 创始人）；联创含 ViT 作者 Dosovitskiy、DeepMind 开放式进化负责人 Rocktaschel、POET 作者 Clune、前 Meta FAIR 总监 Tian。顾问 Peter Norvig。', type: 'fact', sources: [0, 1] },
-        { id: 'industry-frontier-2', text: '技术路线：开放式进化（open-endedness），核心手段 rainbow teaming——两个 AI 对抗共同进化。Socher 区分自改进和 auto-research：前者需系统发展"对自身缺陷的自我意识"。', type: 'fact', sources: [0, 1] },
+        { id: 'industry-frontier-2', text: '技术路线：开放式进化（open-endedness），核心手段是“彩虹对抗”（rainbow teaming）——让两个 AI 互相对抗、共同进化：一个负责攻击找漏洞，另一个负责防守改进，经过数百万次迭代双方都会变强。Socher 区分自改进和 auto-research：前者需系统发展"对自身缺陷的自我意识"。', type: 'fact', sources: [0, 1] },
         { id: 'industry-frontier-3', text: '三家自改进创业公司：Recursive（Socher, $650M/$4.65B）、SSI（Sutskever, $1B+ 融资, 估值 ~$5B, 安全优先路线）、Ricursive Intelligence（AlphaChip 分拆）。三家均无公开产品。一位分析师的观察是，市场在为"如果成立"的上行空间定价，而非为已验证的产品定价。', type: 'opinion', sources: [0, 3] },
         { id: 'industry-frontier-4', text: '大实验室内部进展可能比创业公司更深入，但不透明。OpenAI 在构建"自动化 AI 研究员"（Altman 预计 2026 秋达到初级研究员水平）；Anthropic 多数代码已由 Claude 编写（Jack Clark 估计 60% 概率 2028 年底前出现能自主训练后继者的系统）；DeepMind 的 AlphaEvolve 已生产运行 1 年以上。但这些信息的公开程度有限，难以独立验证。', type: 'opinion', sources: [4] },
         { id: 'industry-frontier-5', text: 'Nvidia 和 AMD 同时投资 Recursive 不是巧合。如果自改进成真，最大瓶颈是算力——芯片公司是卖铲人。它们的参与表明认为自改进是近期计算需求驱动力，不只是遥远理论。', type: 'opinion', sources: [0] },
@@ -211,11 +211,11 @@ const fieldMap: FieldMap = {
     {
       id: 'skepticism',
       title: '质疑、摩擦与边界',
-      thesis: '反对"智能爆炸必然发生"的论点来自四个不同层面——概念（Chollet：智能是 situated 的，不能脱离环境）、工程（Lambert：摩擦递增，sigmoid 而非指数）、认知（Harjas：怀疑 LLM 恰恰是严肃对待自改进的理由）、组织（Ball：知识是分布式嵌入的，单个系统无法复制文明级复杂度）。它们不是同一种反驳的不同版本，而是对"问题出在哪里"的不同诊断。',
+      thesis: '反对"智能爆炸必然发生"的论点来自四个不同层面——概念（Chollet：智能是嵌入在具体环境中的，不能脱离身体、感官、文化这些外部条件）、工程（Lambert：摩擦递增，sigmoid 而非指数）、认知（Harjas：怀疑 LLM 恰恰是严肃对待自改进的理由）、组织（Ball：知识是分布式嵌入的，单个系统无法复制文明级复杂度）。它们不是同一种反驳的不同版本，而是对"问题出在哪里"的不同诊断。',
       intuitions: [
         { id: 'skepticism-1', text: '[哲学层 · 概念质疑] Chollet 的五条核心反驳：智能依赖情境而非内在于大脑（野孩子无人类文化不发展智能）；IQ 130 以上与现实成就相关性断裂——环境设了硬上限；多数智能外化为文明（语言、书籍、机构），单个大脑无法设计比自己更聪明的实体；历史上无一人做到；递归系统实践中呈 S 形增长。αGo Zero 反例动摇了"封闭系统不能自改进"这部分，但未触及 situated intelligence 的核心主张。', type: 'opinion', sources: [0] },
-        { id: 'skepticism-2', text: '[哲学层 · 反反驳] Yudkowsky 的反驳：No Free Lunch 定理不适用——我们生活在归纳有效的低熵宇宙。αGo Zero 单个系统三天超越人类几世纪围棋智慧，证明个体可超分布式集体。但 Chollet 会说围棋是封闭系统——争论核心正是开放系统是否遵循同样模式。', type: 'opinion', sources: [5] },
-        { id: 'skepticism-3', text: '[工程层 · 摩擦分析] Lambert 的"有损自改进"（LSI）框架指出三类递增摩擦：(1) 可自动化研究范围太窄——优化单 benchmark 易，多指标不退化是 90% 难度；(2) 并行 agent 的 Amdahl 定律——一个研究员无法有效指导 300+ agent；(3) 资源瓶颈和组织政治——没人会把数十亿美元算力交给完全自主的 AI 实验。"每个 sigmoid 底部像指数"——GPT-4 scaling、o1 reasoning 都趋平了，自改进不会例外。', type: 'opinion', sources: [1] },
+        { id: 'skepticism-2', text: '[哲学层 · 反反驳] Yudkowsky 的反驳："没有免费午餐"定理不适用——我们生活在一个有规律可循的世界里。αGo Zero 单个系统三天超越人类几世纪围棋智慧，证明个体可超分布式集体。但 Chollet 会说围棋是封闭系统——争论核心正是开放系统是否遵循同样模式。', type: 'opinion', sources: [5] },
+        { id: 'skepticism-3', text: '[工程层 · 摩擦分析] Lambert 的"有损自改进"（LSI）框架指出三类递增摩擦：(1) 可自动化研究范围太窄——优化单 benchmark 易，多指标不退化是 90% 难度；(2) 并行 agent 的效率上限（类似 Amdahl 定律）——一个研究员无法有效指导 300+ agent，加更多 agent 不会让产出线性增长；(3) 资源瓶颈和组织政治——没人会把数十亿美元算力交给完全自主的 AI 实验。"每个 sigmoid 底部像指数"——GPT-4 scaling、o1 reasoning 都趋平了，自改进不会例外。', type: 'opinion', sources: [1] },
         { id: 'skepticism-4', text: '[认知层 · 技术树论证] Harjas 的 paraconsistent 论证：即使 LLM 永远到不了 AGI（怀疑论前提），它们仍可通过自动化研究加速发现正确的技术分支（如神经符号 AI）。你不需相信 LLM 能成 AGI，只需相信它能帮人类找到通往 AGI 的正确道路。这是怀疑论者对自己阵营做的最强 alarmist case——怀疑 LLM 恰恰是严肃对待自改进的理由。', type: 'opinion', sources: [2] },
         { id: 'skepticism-5', text: '[组织层 · 分布式知识] Dean Ball 的论证：TSMC 芯片制造能力来自 9 万互动员工，不是一个大脑的产物。要做出实际改变需要运营实验室、谈判政治、开采矿物——不只是智力问题。知识是隐性的、分布式的、嵌入组织文化的。这个论证和 Chollet 的"智能外化"一脉相承，但更聚焦工程现实而非哲学前提。', type: 'opinion', sources: [3] },
         { id: 'skepticism-6', text: '[工程层 · 可验证性约束] 所有当前自改进系统仅在有客观评估器的领域工作。在无清晰"好坏"标准的领域（战略、创意、开放科学推理），连选择压力都建立不起来。这被一些分析者视为方法论的根限而非暂时障碍——如果找不到构造改进信号的通用方法，自改进将永限于可量化子集。', type: 'opinion', sources: [4] },
@@ -256,7 +256,7 @@ const fieldMap: FieldMap = {
       positions: [
         { side: '爆炸派 (MIRI/Yudkowsky)', argument: '如果 AI 能改进自己，每次改进降低下次成本，正反馈必然爆炸。AlphaGo Zero 单个系统三天超人类几世纪围棋智慧——分布式人类并行效率极低，单个足够强的系统可以胜过任何规模的协作。核心在于是否准备好，不在于是否发生。' },
         { side: '不可能派 (Chollet)', argument: '智能不是可无限放大的标量。历史上无一人设计出比自己更聪明的东西。所有递归系统实践呈 S 形增长——边际递减、瓶颈积累、对抗性摩擦。知识分布式地嵌入组织和文化中（TSMC 的能力来自 9 万互动员工而非一个大脑），单个 AI 无法复制这种复杂性。' },
-        { side: '有损派 (Lambert/LSI)', argument: '自改进真实但非指数。"每个 sigmoid 底部像指数"——GPT-4 scaling、o1 reasoning 都趋平了。自改进同受限于：可自动化研究范围窄、并行 Amdahl 定律、组织政治。不是是否发生的问题，而是是否可持续的问题。' },
+        { side: '有损派 (Lambert/LSI)', argument: '自改进是真实的但不是爆炸性的。“每个 S 形曲线的底部看起来都像指数增长”——GPT-4 scaling、o1 reasoning 都趋平了。自改进同受限于：可自动化研究范围窄、并行 Amdahl 定律、组织政治。不是是否发生的问题，而是是否可持续的问题。' },
       ],
       status: 'active',
     },
