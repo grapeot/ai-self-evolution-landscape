@@ -60,7 +60,7 @@ const fieldMap: FieldMap = {
       intuitions: [
         { id: 'conceptual-origins-1', text: 'Good 的原始论证："第一个 ultraintelligent machine 是人类的最后一项发明"——之后机器会接手。但论证纯演绎，不含数据或形式证明。', type: 'fact', sources: [0] },
         { id: 'conceptual-origins-2', text: 'MIRI 的风险框架：不声称智能爆炸必然发生，但认为后果极其重大值得提前研究。核心 concern 是 competence（能力）而非 malevolence（恶意）：一个 competent 但目标与人类不一致的系统是主要威胁。', type: 'opinion', sources: [1] },
-        { id: 'conceptual-origins-3', text: 'AI 研究者对"何时"没有共识。2011 Oxford 会议中位数预计 2050 年 50% 概率有 HLMI，但 41% 的 AI@50 参会者认为机器智能永远不会达到人类水平。预测分散本身就是一个信号。', type: 'fact', sources: [1] },
+        { id: 'conceptual-origins-3', text: 'AI 研究者对"何时"没有共识。2011 Oxford 会议中位数预计 2050 年 50% 概率有 HLMI，但 41% 的 AI@50 参会者认为机器智能永远不会达到人类水平。预测本身的分散程度就是一个值得注意的信号——如果专家都不能收敛，任何单一预测都不可靠。', type: 'opinion', sources: [1] },
         { id: 'conceptual-origins-4', text: 'Yudkowsky 对 Chollet 的反驳：No Free Lunch 定理在此不适用——我们生活在归纳有效的低熵宇宙。AlphaGo Zero 三天内超越人类几世纪围棋知识，证明单个系统可以超越分布式人类智慧的积累。', type: 'opinion', sources: [3] },
       ],
       pros: ['逻辑简洁：如果 AI 能改进自己，循环就闭合了', 'AlphaGo Zero 等案例提供实证支撑', '为后续工程探索提供概念地基'],
@@ -78,9 +78,9 @@ const fieldMap: FieldMap = {
       thesis: 'AlphaZero 证明了"零人类数据"的自改进在封闭规则系统中可行。但它的成功依赖三个前提：清晰可自动评估的奖励信号、封闭规则空间、大量计算资源。这些在开放世界中不自动成立。',
       intuitions: [
         { id: 'self-play-1', text: 'AlphaZero 从零开始 4 小时超越 Stockfish。具体：每步 1,600 次 MCTS 模拟，每代 25,000 局自对弈，新旧网络 400 局验证 55% 阈值替换，共 200 代。Magnus Carlsen 后来在正式比赛中采用了 AlphaZero 首创的侧翼兵推进策略。', type: 'fact', sources: [0, 1] },
-        { id: 'self-play-2', text: '硬件不对称被低估：AlphaZero 跑在 TPU 上，Stockfish 跑在 CPU 上。论文注释 23 承认此差异。部分提升可能来自硬件优势——虽然策略创新是真实的，但"4 小时超越"的比较不是 apples-to-apples。', type: 'fact', sources: [0, 1] },
+        { id: 'self-play-2', text: '硬件不对称是一个重要的 methodological caveat：AlphaZero 跑在 TPU 上，Stockfish 跑在 CPU 上。论文注释 23 承认此差异。部分提升可能来自硬件优势——虽然策略创新是真实的，但"4 小时超越"的比较不能直接归因于纯算法优势。', type: 'opinion', sources: [0, 1] },
         { id: 'self-play-3', text: '演进路径 AlphaGo（需人类棋谱）→ AlphaGo Zero（纯自对弈）→ AlphaZero（跨三游戏泛化）示范了"逐步移除人类先验"的模式，正被复制到算法发现领域（AutoML-Zero → AlphaEvolve）。', type: 'opinion', sources: [2] },
-        { id: 'self-play-4', text: 'OpenAI Five（Dota 2）和 AlphaStar（StarCraft II）展示在更复杂、不完全信息游戏中的扩展，但也暴露边界：训练需 10 个月，泛化受限。规则越复杂、信息越不完全，自对弈效率越低。', type: 'fact', sources: [2] },
+        { id: 'self-play-4', text: 'OpenAI Five（Dota 2）和 AlphaStar（StarCraft II）展示在更复杂、不完全信息游戏中的扩展，但也暴露边界：训练需 10 个月，泛化受限。规则越复杂、信息越不完全，自对弈的效率会有明显下降——这是一个从多个案例中观察到的模式。', type: 'opinion', sources: [2] },
       ],
       pros: ['零标注数据', '发现人类未想到的策略', '自对弈的"对手即评估器"模式可迁移'],
       cons: ['依赖封闭规则和清晰奖励', '硬件不对称使部分提升难以归因', '开放域扩展仍困难'],
@@ -97,9 +97,9 @@ const fieldMap: FieldMap = {
       intuitions: [
         { id: 'algorithm-discovery-1', text: '四个生产级成果：(1) Google Borg 调度恢复 0.7% 全球算力；(2) Gemini 内核提速 23%（训练时间减 1%）；(3) FlashAttention GPU 内核提速 32.5%；(4) TPU 电路将进下一代 TPU。', type: 'fact', sources: [0, 1] },
         { id: 'algorithm-discovery-2', text: '被低估的自指性：AlphaEvolve 优化的 Gemini 内核正用于训练 AlphaEvolve 内部的 LLM——AI 在加速训练自己的组件。循环已闭合但范围窄（仅限特定内核）。1% 训练时间节省在多代训练中产生复利。', type: 'opinion', sources: [0, 1] },
-        { id: 'algorithm-discovery-3', text: 'AutoML-Zero (2020) 是学术前身：从基本数学运算进化出 SGD、反向传播、归一化梯度。但未成为持续研究方向——从零搜索空间太大，LLM 引导的效率高出几个数量级。', type: 'fact', sources: [2, 3] },
-        { id: 'algorithm-discovery-4', text: 'DeepMind 自述的核心约束："需要自动化评估指标……排除了需要人工实验的任务。"没有可量化目标函数的领域（营销、战略、创意）——AlphaEvolve 无法工作。这是方法论的根限。', type: 'fact', sources: [0, 5] },
-        { id: 'algorithm-discovery-5', text: 'CodeEvolve（开源复现）已用开源模型在 4 个问题上超越 AlphaEvolve。说明方法论优势不在模型质量而在工程规模，技术壁垒有限。', type: 'fact', sources: [4] },
+        { id: 'algorithm-discovery-3', text: 'AutoML-Zero (2020) 是学术前身：从基本数学运算进化出 SGD、反向传播、归一化梯度。但未成为持续研究方向——可能的解释是从零开始的搜索空间太大，LLM 引导的搜索效率高出几个数量级，使得 AutoML-Zero 的纯进化方法在实践上被取代。', type: 'opinion', sources: [2, 3] },
+        { id: 'algorithm-discovery-4', text: 'DeepMind 自述的核心约束："需要自动化评估指标……排除了需要人工实验的任务。"这意味着在没有可量化目标函数的领域（营销、战略、创意），AlphaEvolve 的搜索循环无法建立——这个约束被认为是方法论的根限，而非暂时性的工程障碍。', type: 'opinion', sources: [0, 5] },
+        { id: 'algorithm-discovery-5', text: '已有开源项目在部分问题上复现并超越了 AlphaEvolve 的结果，使用的是开源权重模型。这暗示 AlphaEvolve 的方法论优势可能在工程规模和应用广度上，而非模型质量——技术壁垒比表面看起来低。', type: 'opinion', sources: [4] },
       ],
       pros: ['生产级成果（Google 全球算力）', '自指性循环部分闭合', '跨域通用性已验证（芯片→基因组→物流）'],
       cons: ['受可验证性约束——多数问题无客观评分器', '无法改进自身搜索过程', '开源复现已超越，技术壁垒有限'],
@@ -141,9 +141,10 @@ const fieldMap: FieldMap = {
       intuitions: [
         { id: 'industry-frontier-1', text: 'Recursive 全明星团队：CEO Richard Socher（You.com 创始人）；联创含 ViT 作者 Dosovitskiy、DeepMind 开放式进化负责人 Rocktaschel、POET 作者 Clune、前 Meta FAIR 总监 Tian。顾问 Peter Norvig。', type: 'fact', sources: [0, 1] },
         { id: 'industry-frontier-2', text: '技术路线：开放式进化（open-endedness），核心手段 rainbow teaming——两个 AI 对抗共同进化。Socher 区分自改进和 auto-research：前者需系统发展"对自身缺陷的自我意识"。', type: 'fact', sources: [0, 1] },
-        { id: 'industry-frontier-3', text: '三家自改进创业公司：Recursive（Socher, $650M/$4.65B）、SSI（Sutskever, $3B+/$32B）、Ricursive Intelligence（AlphaChip 分拆）。三家均无公开产品——市场为"如果成立"的上行空间定价。', type: 'fact', sources: [0, 3] },
-        { id: 'industry-frontier-4', text: '大实验室内部进展可能更深但不透明。OpenAI 构建自动化 AI 研究员（Altman 预计 2026 秋初研水平）；Anthropic 多数代码已 Claude 编写（Clark 估 60% 概率 2028 前自主训练后继者）；DeepMind AlphaEvolve 已生产运行 1 年+。', type: 'fact', sources: [4] },
+        { id: 'industry-frontier-3', text: '三家自改进创业公司：Recursive（Socher, $650M/$4.65B）、SSI（Sutskever, $3B+/$32B）、Ricursive Intelligence（AlphaChip 分拆）。三家均无公开产品。一位分析师的观察是，市场在为"如果成立"的上行空间定价，而非为已验证的产品定价。', type: 'opinion', sources: [0, 3] },
+        { id: 'industry-frontier-4', text: '大实验室内部进展可能比创业公司更深入，但不透明。OpenAI 在构建"自动化 AI 研究员"（Altman 预计 2026 秋达到初级研究员水平）；Anthropic 多数代码已由 Claude 编写（Jack Clark 估计 60% 概率 2028 年底前出现能自主训练后继者的系统）；DeepMind 的 AlphaEvolve 已生产运行 1 年以上。但这些信息的公开程度有限，难以独立验证。', type: 'opinion', sources: [4] },
         { id: 'industry-frontier-5', text: 'Nvidia 和 AMD 同时投资 Recursive 不是巧合。如果自改进成真，最大瓶颈是算力——芯片公司是卖铲人。它们的参与表明认为自改进是近期计算需求驱动力，不只是遥远理论。', type: 'opinion', sources: [0] },
+        { id: 'industry-frontier-6', text: '自改进 AI 的安全哲学分裂成两条路线：Recursive 的开放式进化和 rainbow teaming 认为对抗性自我测试本身就是安全机制——两个 AI 互相攻击能暴露漏洞；SSI（Sutskever, $32B）则拒绝公开任何产品和路线图，认为自改进系统一旦启动就无法关闭，安全验证必须在封闭环境中预先完成。这两种路线代表了"开放即安全"和"封闭才安全"的根本分歧。', type: 'opinion', sources: [0, 4] },
       ],
       pros: ['资本涌入加速工程探索', '全明星团队密度罕见', '大实验室内部项目提供更可靠验证'],
       cons: ['$4.65B 估值建立在零产品零 demo 上', 'Socher 同时管理 You.com，精力分散', '关键进展不透明——公共叙事可能滞后或误导'],
@@ -214,6 +215,15 @@ const fieldMap: FieldMap = {
       positions: [
         { side: '个体论者 (Yudkowsky)', argument: 'AlphaGo Zero 单个系统三天超人类几世纪围棋智慧。Kasparov vs The World 也输了。人类并行低效——沟通成本 N(N-1)/2。单个足够强的系统可胜任何规模分布式协作。' },
         { side: '分布式论者 (Chollet/Ball)', argument: '围棋和芯片制造不同。TSMC 能力来自 9 万互动员工。要实际改变需物理基础设施、供应链、政治谈判——不只是智力。知识隐性的、分布式的、嵌入组织文化。单个 AI 无法复制这种复杂性。' },
+      ],
+      status: 'active',
+    },
+    {
+      id: 'tension-alignment-speed',
+      question: '自改进应该追求速度还是追求安全？',
+      positions: [
+        { side: '速度优先 (Recursive)', argument: '开放式进化和 rainbow teaming 本身就是安全机制——两个 AI 对抗性共同进化，攻击方天然会暴露防守方的漏洞。开放比封闭更安全，因为封闭系统的缺陷不可见。最快的进展也是最好的安全策略——谁先到达可自改进的 AI，谁就能定义规则。' },
+        { side: '安全优先 (SSI/Sutskever)', argument: 'SSI 以 $32B 估值、零产品、零公开路线图的姿态明确拒绝速度竞争。他们的隐含假设是：自改进系统一旦启动就无法关闭，因此必须在启动前确保安全。速度和安全是 trade-off，而当前的市场竞争压力系统性地偏向速度。' },
       ],
       status: 'active',
     },
