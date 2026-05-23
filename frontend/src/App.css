@@ -400,11 +400,47 @@
 
 /* Reading path */
 .reading-path {
-  margin: 64px 0;
-  padding: 28px;
+  margin: 80px 0;
+  padding: 36px 32px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
+}
+
+.reading-path h2 {
+  font-size: 18px;
+  margin-bottom: 28px;
+}
+
+.reading-path .path-group {
+  margin-bottom: 32px;
+}
+
+.reading-path .path-group:last-child {
+  margin-bottom: 0;
+}
+
+.reading-path .path-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.reading-path .path-intuition {
+  font-size: 15px;
+  line-height: 1.8;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reading-path .path-intuition .path-badge {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 8px;
+  background: var(--border);
+  color: var(--text-secondary);
 }
 
 .reading-path h2 {
