@@ -103,6 +103,7 @@ const fieldMap: FieldMap = {
       ],
       articles: [
         { title: 'AlphaZero 论文 — Science (2018)', url: 'https://www.science.org/doi/10.1126/science.aar6404', relevance: '自对弈这一机制的里程碑证明', tier: 'primary' },
+        { title: 'AlphaGo Zero 论文 — Nature (2017)', url: 'https://www.nature.com/articles/nature24270', translatedUrl: '/ai-self-evolution-landscape/translations/alphago-zero.html', relevance: 'AlphaZero 的直接前身，首次证明零人类数据自对弈可行性', tier: 'primary' },
         { title: 'AlphaZero 技术解析 — TDS', url: 'https://towardsdatascience.com/alphazero-chess-how-it-works-what-sets-it-apart-and-what-it-can-tell-us-4ab3d2d08867/',
         translatedUrl: '/ai-self-evolution-landscape/translations/alphazero-tds.html', relevance: '大师级棋手撰写的技术细节全解', tier: 'primary' },
         { title: '自我对弈 RL 通俗讲解 — Medium', url: 'https://medium.com/biased-algorithms/self-play-reinforcement-learning-for-strategic-games-886cf4b9baf8',

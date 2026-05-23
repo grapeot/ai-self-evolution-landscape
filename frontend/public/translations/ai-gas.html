@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-GAs：AI 生成算法——通向通用人工智能的另一条路径</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 2em auto; padding: 0 1em; line-height: 1.8; color: #222; }
+  h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+  .meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+  .access-note { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 0.8em 1em; margin: 1em 0; border-radius: 4px; font-size: 0.9em; color: #555; }
+  .section { margin: 1.5em 0; }
+  .section h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+  p { text-align: justify; }
+  a { color: #0366d6; }
+  .original-link { display: inline-block; margin-top: 2em; padding: 0.5em 1em; background: #0366d6; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+  .original-link:hover { background: #0256b4; }
+</style>
+</head>
+<body>
+
+<h1>AI-GAs：AI 生成算法——产生通用人工智能的另一范式</h1>
+<div class="meta">
+  <strong>Jeff Clune</strong> · arXiv:1905.10985 (2019, 2020 年修订) ·
+  <a href="https://doi.org/10.48550/arXiv.1905.10985">doi:10.48550/arXiv.1905.10985</a> · arXiv 开放获取
+</div>
+
+<div class="access-note">
+  ✅ 本文为 arXiv 预印本，全文可在 arXiv 免费获取。
+</div>
+
+<div class="section">
+<h2>摘要</h2>
+<p>也许人类历史上最具雄心的科学追求是创造通用人工智能（General AI），即大致与人类一样聪明或更聪明的 AI。机器学习社区的主流方法是试图逐个发现智能所需的各个组件，隐含地假设某个未来的团队将完成将所有这些组件组合成一个复杂思维机器的艰巨任务。作者称之为"手工 AI 方法"。本文描述了另一条令人兴奋的路径，它最终可能更成功地产生通用 AI。该路径基于机器学习中的一个清晰趋势：手工设计的解决方案最终会被更有效的、学习到的解决方案所取代。其核心思想是创建一个 AI 生成算法（AI-GA），该算法自动学习如何产生通用 AI。该方法依赖于三个基本支柱：（1）元学习架构；（2）元学习学习算法本身；（3）生成有效的学习环境。作者认为两种方法都有可能首先产生通用 AI，且无论哪条路径更快，两者在科学上都是有价值的。鉴于两种方法都有前景，而 ML 社区目前专注于手工方法，作者认为我们的社区应增加对 AI-GA 方法的研究投入。为了鼓励此类研究，文章描述了三个支柱中各有前景的工作，并讨论了 AI-GA 特有的安全性和伦理考虑。因为 AI-GA 可能是通向通用 AI 的最快路径，并且它本身就具有科学趣味性——理解简单算法在什么条件下能产生通用 AI（正如地球上发生的达尔文进化产生了人类智能），作者认为追求 AI-GA 应被视为计算机科学研究的新重大挑战。</p>
+</div>
+
+<div class="section">
+<h2>三大支柱</h2>
+<p><strong>支柱一：元学习架构。</strong>传统的神经网络架构（如 CNN、Transformer）由人类专家手工设计。AI-GA 方法希望自动学习或进化出最适合给定任务的网络架构。神经架构搜索（NAS）和进化神经网络是该方向的早期尝试，但最终目标是创建能自我改进架构的元学习系统。</p>
+<p><strong>支柱二：元学习学习算法本身。</strong>今天的优化算法（SGD、Adam、RMSProp 等）都是人类设计的。AI-GA 希望自动发现更好的学习算法。这包括学习如何设置学习率、如何初始化权重、如何进行梯度变换等。更广泛地说，这意味着系统能发现全新的训练范式，而不仅仅是微调现有方法。</p>
+<p><strong>支柱三：生成有效的学习环境。</strong>智能体需要在合适的环境中学习。AI-GA 方法认为，学习环境本身也应该被生成和优化，而不是由人类设计。通过自动生成具有适当难度和多样性的环境，AI 可以更高效地学习通用技能。这与自动课程学习（automatic curriculum learning）和开放式学习（open-ended learning）密切相关。</p>
+</div>
+
+<div class="section">
+<h2>核心论点</h2>
+<p>Clune 的核心洞见是：深度学习的历史已反复证明，手工设计的解决方案最终会被学习到的解决方案超越。例如，手工设计的特征（SIFT、HOG）被学习到的特征（CNN 表示）所取代；手工设计的翻译规则被神经机器翻译所取代。按此趋势，AI 系统本身的设计——包括其架构、学习算法和训练环境——最终也应由自动化的元学习过程来完成，而非人类手工设计。</p>
+<p>AI-GA 的终极愿景是：我们不需要设计 AGI，而是设计一个能<em>生成</em> AGI 的算法。这个生成算法本身可以相对简单，但在适当的条件和足够的计算资源下，能通过迭代自我改进产生超过人类水平的通用智能。</p>
+</div>
+
+<div class="section">
+<h2>与达尔文进化的类比</h2>
+<p>AI-GA 的核心思想深受达尔文进化的启发。地球上，一个相对简单的机制（自然选择 + 变异）在数十亿年的时间尺度上产生了人类智能。Clune 认为，如果我们能在人工系统中捕捉到类似的"简单算法 + 丰富环境 + 足够时间"的条件，就有可能加速这一过程，在合理的时间尺度上产生通用 AI。</p>
+</div>
+
+<div class="section">
+<h2>安全性与伦理</h2>
+<p>论文专门讨论了 AI-GA 特有的安全与伦理问题：如果 AI 生成算法能够自主产生越来越强大的 AI，那么对其行为的预测和控制将比传统方法更为困难。Clune 呼吁在追求 AI-GA 的同时，并行研究其安全性和可控性，包括可解释性、价值对齐和故障安全机制。</p>
+</div>
+
+<a class="original-link" href="https://arxiv.org/abs/1905.10985" target="_blank">原文链接 · arXiv</a>
+
+</body>
+</html>

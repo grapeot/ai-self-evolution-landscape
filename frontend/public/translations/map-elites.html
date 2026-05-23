@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAP-Elites——通过精英映射照亮搜索空间</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 2em auto; padding: 0 1em; line-height: 1.8; color: #222; }
+  h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+  .meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+  .access-note { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 0.8em 1em; margin: 1em 0; border-radius: 4px; font-size: 0.9em; color: #555; }
+  .section { margin: 1.5em 0; }
+  .section h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+  p { text-align: justify; }
+  a { color: #0366d6; }
+  .original-link { display: inline-block; margin-top: 2em; padding: 0.5em 1em; background: #0366d6; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+  .original-link:hover { background: #0256b4; }
+</style>
+</head>
+<body>
+
+<h1>MAP-Elites：通过精英映射照亮搜索空间</h1>
+<div class="meta">
+  <strong>Jean-Baptiste Mouret</strong> 和 <strong>Jeff Clune</strong> · arXiv:1504.04909 (2015) ·
+  <a href="https://doi.org/10.48550/arXiv.1504.04909">doi:10.48550/arXiv.1504.04909</a> · arXiv 开放获取
+</div>
+
+<div class="access-note">
+  ✅ 本文为 arXiv 预印本，全文可在 arXiv 免费获取。
+</div>
+
+<div class="section">
+<h2>摘要</h2>
+<p>许多领域都在使用搜索算法来自动探索搜索空间以找到高性能的解决方案：化学家搜索分子空间以发现新药物；工程师搜索更强、更便宜、更安全的设计；科学家搜索最能解释数据的模型等。传统上，搜索算法的目标是返回搜索空间中单一的性能最高的解决方案。本文描述了一种全新的、根本不同类型的算法，它更加有用，因为它提供了搜索空间中高性能解决方案如何分布的整体视角。该算法在用户选择的特征维度所定义的空间中的每个点，创建一个高性能解决方案的地图。这种"表型精英的多维档案"（MAP-Elites）算法照亮了搜索空间，使研究人员能够理解解决方案的有趣属性如何组合起来影响性能——无论是正面还是（同样有趣的）负面影响。例如，一家制药公司可能希望了解性能如何随分子大小和生产成本变化。MAP-Elites 产生大量多样化的、高性能但性质上不同的解决方案，这比单一的、高性能的解决方案更有帮助。有趣的是，由于 MAP-Elites 探索了更多的搜索空间，它也倾向于找到比最先进的搜索算法更好的总体解决方案。我们在三个不同的问题领域展示了这种新算法的优势，从生成模块化神经网络到设计模拟和真实的软体机器人。由于 MAP-Elites（1）揭示了性能与解决方案中感兴趣维度之间的关系，（2）返回一组高性能但多样化的解决方案，（3）改进了单一最佳解决方案的发现，它将推动科学和工程的发展。</p>
+</div>
+
+<div class="section">
+<h2>传统搜索的局限</h2>
+<p>传统的优化和搜索方法（包括遗传算法、贝叶斯优化、模拟退火等）都专注于寻找单一的最优解。这在许多场景中是有意义的，但它至少有三个根本局限：</p>
+<p>第一，它无法揭示搜索空间的整体结构——在什么情况下什么类型的方案表现良好？第二，在实际应用中，用户往往不只关心单一指标，而是关心解决方案在不同维度上的权衡（例如性能 vs 成本 vs 安全性）。第三，单一最优解可能在稍有不同的条件下就不再是最优的，缺乏稳健性。</p>
+</div>
+
+<div class="section">
+<h2>MAP-Elites 的核心思想</h2>
+<p>MAP-Elites 的创新在于：它不是在一个目标函数上优化，而是在用户定义的一组"特征维度"（behavioral descriptors 或 feature space）上，对每个可能的特征组合维护一个"精英"解决方案——即该特征组合中性能最好的个体。算法维护一个档案（archive），该档案是一个多维网格，每个格子对应一个特征组合。在每个格子中，只保留该特征组合下性能最佳的解决方案。算法通过以下步骤迭代：（1）从档案中随机选择一个解决方案；（2）对其应用随机变异；（3）评估新解决方案的特征和性能；（4）如果新解决方案所在的格子为空，或者其性能优于格子里现有的方案，则替换之。</p>
+<p>这样，MAP-Elites 最终生成搜索空间的"质量-多样性"地图，显示在每个感兴趣的特征区域中，最佳性能可以达到什么水平。</p>
+</div>
+
+<div class="section">
+<h2>关键优势</h2>
+<p><strong>多样性保持：</strong>与惩罚多样性或专门维护多样性的方法不同，MAP-Elites 天然地保持多样性——它<em>要求</em>在每个特征组合中都存在且仅存在一个精英。这避免了传统遗传算法中的"群体收敛"问题。</p>
+<p><strong>搜索空间的"照明"：</strong>通过生成的档案地图，研究人员可以直观地看到性能在不同特征维度上的变化趋势。例如，在机器人设计任务中，用户可以观察机器人速度（一个特征维度）和腿的数量（另一个特征维度）如何影响运动效率。</p>
+<p><strong>改进的全局搜索：</strong>由于 MAP-Elites 系统地探索了广泛的搜索区域，它往往能找到比专注于单一区域的方法更好的全局最优解。论文中的实验证实了这一反直觉的现象：虽然 MAP-Elites 在每个格子里只保留一个精英，但它最终找到的全局最佳解通常优于传统遗传算法找到的最佳解。</p>
+</div>
+
+<div class="section">
+<h2>应用案例</h2>
+<p>论文在三个领域展示了 MAP-Elites 的效果：</p>
+<p><strong>模块化神经网络：</strong>在该任务中，特征维度是网络的连接模式复杂度等属性，效能维度是分类准确率。MAP-Elites 生成了一个完整的"网络架构效果地图"，揭示了哪些架构在不同复杂度下表现最佳。</p>
+<p><strong>模拟软体机器人：</strong>设计可以在不同地形上行走的软体机器人。特征维度包括机器人的形状和运动模式，性能维度是移动速度。MAP-Elites 发现了多样化的、高效的机器人形态。</p>
+<p><strong>真实软体机器人：</strong>将 MAP-Elites 应用于 3D 打印软体机器人的实际构建和测试中，验证了该算法在物理世界中的有效性。</p>
+</div>
+
+<div class="section">
+<h2>后续影响</h2>
+<p>MAP-Elites 开创了"质量-多样性"（Quality-Diversity, QD）优化这一研究领域，该领域自 2015 年以来迅速发展，成为演化计算和机器人学中的重要方向。在 AI 自进化（AI Self-Evolution）的语境下，MAP-Elites 提供了一种在探索（多样性）和利用（质量）之间平衡的框架，对开放式学习、自动课程学习和创造性问题求解具有深远影响。</p>
+</div>
+
+<a class="original-link" href="https://arxiv.org/abs/1504.04909" target="_blank">原文链接 · arXiv</a>
+
+</body>
+</html>
