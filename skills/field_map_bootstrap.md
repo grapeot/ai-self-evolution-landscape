@@ -168,12 +168,15 @@ Intuition 的质量自检：
 
 ## 已知陷阱
 
-这是初版 skill，暂无来自实际迭代的已知陷阱。以下是在设计时识别出的可能风险，供后续迭代验证：
+以下来自 2026-05-22 实际运行 pipeline 的已确认陷阱：
 
-- **把阅读清单当结论**：seed 是调研起点，不是 answers。最容易犯的错误是把 seed 里列的文章介绍直接当作 Intuition 写进去，而没有做独立验证和横向对比。
+- **fact/opinion 标注膨胀**：agent 容易把包含因果推断和价值判断的陈述标成 fact。本轮发现 8 条 Intuition 标注错误（例如"硬件不对称被低估"、"市场在为上行空间定价"——这些是 opinion 而非 fact）。规则：只要陈述涉及"被低估/被高估"、"可能来自"、"说明……"、任何因果推断或价值判断，就应该是 opinion。
+- **把阅读清单当结论**：seed 是调研起点，不是 answers。本轮 seed 中的 19 篇文章提供了初始结构，但 7 个并行 sub-agent 的深度调研后，6 个 Region 的 thesis 全部重写，新增了 15 条 Intuition 和 25 篇 reference。如果只靠 seed 写 Intuition 而不做独立验证，产出会停留在 summary 层面而非 analysis 层面。
 - **Intuition 过于笼统**：写"自我对弈是 AI 自进化的关键方法"而不是"AlphaZero 证明了自我对弈可以在封闭规则系统内从零达到超人类水平，但扩展性取决于能否定义清晰的奖励信号"。前者是方向描述，后者是可质疑的 claim。
-- **避免 opinion 但 agent 自己下了判断**：区分 type: 'fact' 和 'opinion' 时，agent 容易把自己的合成判断标成 fact。规则：任何包含因果推断、价值判断、或预测的陈述都是 opinion。
-- **Tension 是 agent 自己编的**：Tension 必须有 source 支撑的立场。如果两个 Region 看起来矛盾但没有任何 source 明确表达了这个矛盾，这个 Tension 可能是 agent 自己在脑中构建的，不应该记录。
+- **Tension 是 agent 自己编的**：Tension 必须有 source 支撑的立场。本轮 5 个 Tension 全部 trace 到具体 source（MIRI、Chollet、Ball、Lambert、Harjas、Karpathy、Recursive、SSI）。
+- **GitHub Pages 子路径部署**：GitHub Pages 部署在 `/<repo-name>/` 而非根路径。Vite 默认生成根相对路径的 assets（`/assets/...`）。必须设置 `base: '/<repo-name>/'` 否则 JS/CSS 404。这个 bug 导致网站首次部署后显示为空白页。
+- **网站部署后需 Playwright 验证**：`curl` 只能检查 HTML 是否返回 200，无法发现 React 渲染失败或 JS 404。本轮 curl 返回了正确的 HTML（含 `<div id="root">`），但浏览器中 JS 实际加载失败——只有 Playwright snapshot 能暴露这个问题。
+- **审阅 agent 的类别选择**：gemini31pro 擅长事实核查（准确识别了全部 7 条 fact→opinion 错误和缺失的 alignment tension），deepseek 擅长结构审查（识别出分类轴不一致、质疑区混层、阅读路径伪时间线问题）。审阅应同时派两种 agent 而非二选一。
 
 ## 输出规格
 

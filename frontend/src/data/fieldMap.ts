@@ -73,44 +73,40 @@ const fieldMap: FieldMap = {
       ],
     },
     {
-      id: 'self-play',
-      title: '自我对弈',
-      thesis: 'AlphaZero 证明了"零人类数据"的自改进在封闭规则系统中可行。但它的成功依赖三个前提：清晰可自动评估的奖励信号、封闭规则空间、大量计算资源。这些在开放世界中不自动成立。',
+      id: 'evolutionary-search',
+      title: '自对弈与进化搜索',
+      thesis: '从 AlphaZero（游戏中的自对弈）到 AlphaEvolve（生产环境中的进化搜索），这条路线证明了同一个核心机制——"生成-评估-迭代"——可以从零人类数据出发，在封闭规则系统和可量化评估的开放域中都达到超人类水平。但关键约束未变：必须有可自动计算的评估函数，否则选择压力无法建立。"开放"与"封闭"的区别不在机制，在评估函数的可得性。',
       intuitions: [
-        { id: 'self-play-1', text: 'AlphaZero 从零开始 4 小时超越 Stockfish。具体：每步 1,600 次 MCTS 模拟，每代 25,000 局自对弈，新旧网络 400 局验证 55% 阈值替换，共 200 代。Magnus Carlsen 后来在正式比赛中采用了 AlphaZero 首创的侧翼兵推进策略。', type: 'fact', sources: [0, 1] },
-        { id: 'self-play-2', text: '硬件不对称是一个重要的 methodological caveat：AlphaZero 跑在 TPU 上，Stockfish 跑在 CPU 上。论文注释 23 承认此差异。部分提升可能来自硬件优势——虽然策略创新是真实的，但"4 小时超越"的比较不能直接归因于纯算法优势。', type: 'opinion', sources: [0, 1] },
-        { id: 'self-play-3', text: '演进路径 AlphaGo（需人类棋谱）→ AlphaGo Zero（纯自对弈）→ AlphaZero（跨三游戏泛化）示范了"逐步移除人类先验"的模式，正被复制到算法发现领域（AutoML-Zero → AlphaEvolve）。', type: 'opinion', sources: [2] },
-        { id: 'self-play-4', text: 'OpenAI Five（Dota 2）和 AlphaStar（StarCraft II）展示在更复杂、不完全信息游戏中的扩展，但也暴露边界：训练需 10 个月，泛化受限。规则越复杂、信息越不完全，自对弈的效率会有明显下降——这是一个从多个案例中观察到的模式。', type: 'opinion', sources: [2] },
+        { id: 'evolutionary-search-1', text: 'AlphaZero (2018) 是 proof of concept：从零开始 4 小时超越 Stockfish。具体机制：每步 1,600 次 MCTS 模拟，每代 25,000 局自对弈，新旧网络 400 局/55% 阈值替换，200 代。Magnus Carlsen 后来的正式比赛采用了它的策略。AlphaGo→AlphaGo Zero→AlphaZero 的演进展示了"逐步移除人类先验"的通用模式。', type: 'fact', sources: [0, 1] },
+        { id: 'evolutionary-search-2', text: 'AlphaZero 的硬件不对称是一个被低估的 caveat：跑在 TPU 上而 Stockfish 跑在 CPU 上。论文注释 23 承认此差异。AlphaStar 和 OpenAI Five 在更复杂游戏中的训练时间（10 个月）和泛化受限也提示：自对弈效率随环境复杂度非线性下降。', type: 'opinion', sources: [0, 2] },
+        { id: 'evolutionary-search-3', text: 'AlphaEvolve (2025) 将自对弈逻辑搬到算法空间——LLM 生成候选解 → 自动评估器打分 → 保留最优 → 迭代。四项生产级成果：(1) Google Borg 调度恢复 0.7% 全球算力；(2) Gemini 内核提速 23%（训练时间减 1%）；(3) FlashAttention GPU 内核提速 32.5%；(4) TPU 电路将进下一代。2026 年影响力已扩展至基因组学、量子计算和物流。', type: 'fact', sources: [3, 4] },
+        { id: 'evolutionary-search-4', text: 'AlphaEvolve 最被低估的特征是自指性：它优化了 Gemini 训练内核，而 Gemini 正是 AlphaEvolve 内部的 LLM——AI 在加速训练自己的组件。循环已闭合但范围窄（仅限特定内核）。1% 训练时间节省在多代训练中产生复利。', type: 'opinion', sources: [3, 4] },
+        { id: 'evolutionary-search-5', text: 'AutoML-Zero (2020) 是学术前身——从基本数学运算进化出 SGD 和反向传播，证明了"去除人类先验后算法可被重新发现"。但它的遗产不是方法本身（从零搜索太慢），而是"不那么人类先验的搜索空间可以发现人类未想到的解"这个洞察——这正是 AlphaEvolve 用 LLM 做搜索引导后实现的。', type: 'opinion', sources: [5, 6] },
+        { id: 'evolutionary-search-6', text: '可验证性约束（verifiability constraint）：DeepMind 论文自述"需要自动化评估指标，排除了需要人工实验的任务"。这是整个进化搜索路线的根限——战略规划、创意工作、开放科学推理等没有清晰"好坏"标准的领域，连选择压力都无法建立。AlphaEvolve 的 2026 扩展（基因组学、量子、物流）都是可量化验证的领域，不是随机挑选的——它们恰好属于"有评估器"的子集。', type: 'opinion', sources: [3, 7] },
+        { id: 'evolutionary-search-7', text: '开源复现已超越 AlphaEvolve 在部分问题上。方法论优势在工程规模和应用广度而非模型质量——技术壁垒有限。同时 AlphaEvolve 不修改自己的搜索过程（LLM 集合、prompt 采样、MAP-Elites 数据库都是人工设计的固定组件），不是完整意义上的递归自改进。', type: 'opinion', sources: [8, 9] },
       ],
-      pros: ['零标注数据', '发现人类未想到的策略', '自对弈的"对手即评估器"模式可迁移'],
-      cons: ['依赖封闭规则和清晰奖励', '硬件不对称使部分提升难以归因', '开放域扩展仍困难'],
+      pros: [
+        '从游戏（AlphaZero）到芯片/基因组/物流（AlphaEvolve），机制通用性已验证',
+        '自指性循环已部分闭合——AI 在优化训练自己的组件',
+        '零人类数据自改进的模式可迁移到任何有自动评估器的领域',
+      ],
+      cons: [
+        '可验证性约束是根限——没有评估器就没有选择压力',
+        '硬件优势难以与算法优势分离（TPU vs CPU 是 AlphaZero 时期就存在的归因问题）',
+        '不能改进自己的搜索过程——LLM 集合、评估器、进化数据库都是固定的人工组件',
+        '开源复现已追上——技术壁垒主要在工程规模而非算法',
+      ],
       articles: [
-        { title: 'AlphaZero 论文 — Science (2018)', url: 'https://www.science.org/doi/10.1126/science.aar6404', relevance: '里程碑论文', tier: 'primary' },
-        { title: 'AlphaZero 技术解析 — TDS', url: 'https://towardsdatascience.com/alphazero-chess-how-it-works-what-sets-it-apart-and-what-it-can-tell-us-4ab3d2d08867/', relevance: '技术细节全解，大师级棋手撰写', tier: 'primary' },
-        { title: '自我对弈 RL 通俗讲解 — Medium', url: 'https://medium.com/biased-algorithms/self-play-reinforcement-learning-for-strategic-games-886cf4b9baf8', relevance: 'AlphaGo→AlphaZero→MuZero→OpenAI Five', tier: 'supporting' },
-      ],
-    },
-    {
-      id: 'algorithm-discovery',
-      title: '算法自动发现与基础设施优化',
-      thesis: 'AlphaEvolve 证明 LLM 引导的进化搜索可在生产环境发现优于人类设计的算法。但核心约束是"可验证性"：必须有人工设计的自动评估器，否则进化循环无选择压力。',
-      intuitions: [
-        { id: 'algorithm-discovery-1', text: '四个生产级成果：(1) Google Borg 调度恢复 0.7% 全球算力；(2) Gemini 内核提速 23%（训练时间减 1%）；(3) FlashAttention GPU 内核提速 32.5%；(4) TPU 电路将进下一代 TPU。', type: 'fact', sources: [0, 1] },
-        { id: 'algorithm-discovery-2', text: '被低估的自指性：AlphaEvolve 优化的 Gemini 内核正用于训练 AlphaEvolve 内部的 LLM——AI 在加速训练自己的组件。循环已闭合但范围窄（仅限特定内核）。1% 训练时间节省在多代训练中产生复利。', type: 'opinion', sources: [0, 1] },
-        { id: 'algorithm-discovery-3', text: 'AutoML-Zero (2020) 是学术前身：从基本数学运算进化出 SGD、反向传播、归一化梯度。但未成为持续研究方向——可能的解释是从零开始的搜索空间太大，LLM 引导的搜索效率高出几个数量级，使得 AutoML-Zero 的纯进化方法在实践上被取代。', type: 'opinion', sources: [2, 3] },
-        { id: 'algorithm-discovery-4', text: 'DeepMind 自述的核心约束："需要自动化评估指标……排除了需要人工实验的任务。"这意味着在没有可量化目标函数的领域（营销、战略、创意），AlphaEvolve 的搜索循环无法建立——这个约束被认为是方法论的根限，而非暂时性的工程障碍。', type: 'opinion', sources: [0, 5] },
-        { id: 'algorithm-discovery-5', text: '已有开源项目在部分问题上复现并超越了 AlphaEvolve 的结果，使用的是开源权重模型。这暗示 AlphaEvolve 的方法论优势可能在工程规模和应用广度上，而非模型质量——技术壁垒比表面看起来低。', type: 'opinion', sources: [4] },
-      ],
-      pros: ['生产级成果（Google 全球算力）', '自指性循环部分闭合', '跨域通用性已验证（芯片→基因组→物流）'],
-      cons: ['受可验证性约束——多数问题无客观评分器', '无法改进自身搜索过程', '开源复现已超越，技术壁垒有限'],
-      articles: [
-        { title: 'AlphaEvolve 发布 — DeepMind (2025)', url: 'https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/', relevance: '核心发布：架构、方法、初始成果', tier: 'primary' },
-        { title: 'AlphaEvolve 影响力 — DeepMind (2026)', url: 'https://deepmind.google/blog/alphaevolve-impact/', relevance: '基因组学、量子、物流数据', tier: 'primary' },
-        { title: 'AutoML-Zero 论文 (2020)', url: 'https://arxiv.org/abs/2003.03384', relevance: '学术前身', tier: 'supporting' },
+        { title: 'AlphaZero 论文 — Science (2018)', url: 'https://www.science.org/doi/10.1126/science.aar6404', relevance: '自对弈这一机制的里程碑证明', tier: 'primary' },
+        { title: 'AlphaZero 技术解析 — TDS', url: 'https://towardsdatascience.com/alphazero-chess-how-it-works-what-sets-it-apart-and-what-it-can-tell-us-4ab3d2d08867/', relevance: '大师级棋手撰写的技术细节全解', tier: 'primary' },
+        { title: '自我对弈 RL 通俗讲解 — Medium', url: 'https://medium.com/biased-algorithms/self-play-reinforcement-learning-for-strategic-games-886cf4b9baf8', relevance: 'AlphaGo→AlphaZero→MuZero→OpenAI Five 完整演进', tier: 'supporting' },
+        { title: 'AlphaEvolve 发布 — Google DeepMind (2025)', url: 'https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/', relevance: '架构、方法、初始成果', tier: 'primary' },
+        { title: 'AlphaEvolve 影响力 — Google DeepMind (2026)', url: 'https://deepmind.google/blog/alphaevolve-impact/', relevance: '跨域扩展：基因组学、量子、物流', tier: 'primary' },
+        { title: 'AutoML-Zero 论文 (2020)', url: 'https://arxiv.org/abs/2003.03384', relevance: '学术前身：从基本运算进化出 ML 算法', tier: 'supporting' },
         { title: 'AutoML-Zero 通俗版 — Google Blog', url: 'https://research.google/blog/automl-zero-evolving-code-that-learns/', relevance: '入门解读', tier: 'supporting' },
-        { title: 'CodeEvolve 论文 (2025)', url: 'https://arxiv.org/html/2510.14150v2', relevance: '开源复现，4 问题上超越原版', tier: 'counterpoint' },
-        { title: 'AlphaEvolve 独立评测 — Ernest Davis (NYU)', url: 'https://cs.nyu.edu/~davise/papers/AlphaEvolveNotes.pdf', relevance: '学术评审：增量性质、TPU 改进被独立发现', tier: 'counterpoint' },
-        { title: 'Self-Improving AI Guide 2026 — o-mega', url: 'https://o-mega.ai/articles/self-improving-ai-agents-the-2026-guide', relevance: '可验证性约束系统分析', tier: 'supporting' },
+        { title: 'Self-Improving AI Guide 2026 — o-mega', url: 'https://o-mega.ai/articles/self-improving-ai-agents-the-2026-guide', relevance: '可验证性约束的系统分析', tier: 'supporting' },
+        { title: '开源复现论文 (2025)', url: 'https://arxiv.org/html/2510.14150v2', relevance: '用开源模型超越 AlphaEvolve 在部分问题上', tier: 'counterpoint' },
+        { title: 'AlphaEvolve 独立评测 — Ernest Davis (NYU)', url: 'https://cs.nyu.edu/~davise/papers/AlphaEvolveNotes.pdf', relevance: '学术评审：增量性质，TPU 改进被独立发现', tier: 'counterpoint' },
       ],
     },
     {
@@ -183,11 +179,11 @@ const fieldMap: FieldMap = {
   tensions: [
     {
       id: 'tension-explosion',
-      question: '智能爆炸：必然逻辑还是不可能的前提？',
+      question: '自改进会爆炸性加速还是自然趋平？',
       positions: [
-        { side: '正方 (MIRI/Yudkowsky)', argument: '如果 AI 能改进自己，每次改进降低下次成本，正反馈必然爆炸。AlphaGo Zero 三天超越人类几世纪围棋知识证明单个系统可超分布式智慧。核心不在于是否发生，在于是否准备好。' },
-        { side: '反方 (Chollet)', argument: '智能不是可无限放大的标量。需传感器、环境、文化共进化。历史上无一人设计出比自己聪明的。所有递归系统实践呈 S 形增长——边际递减、瓶颈积累。AlphaGo Zero 在封闭系统有效正说明开放系统是不同问题。' },
-        { side: '中间 (Lambert/LSI)', argument: '自改进真实但非指数。"每个 sigmoid 底部像指数"——GPT-4 scaling、o1 reasoning 都趋平了。自改进同受限于：可自动化研究范围窄、并行 Amdahl 定律、组织政治约束。' },
+        { side: '爆炸派 (MIRI/Yudkowsky)', argument: '如果 AI 能改进自己，每次改进降低下次成本，正反馈必然爆炸。AlphaGo Zero 单个系统三天超人类几世纪围棋智慧——分布式人类并行效率极低，单个足够强的系统可以胜过任何规模的协作。核心在于是否准备好，不在于是否发生。' },
+        { side: '不可能派 (Chollet)', argument: '智能不是可无限放大的标量。历史上无一人设计出比自己更聪明的东西。所有递归系统实践呈 S 形增长——边际递减、瓶颈积累、对抗性摩擦。知识分布式地嵌入组织和文化中（TSMC 的能力来自 9 万互动员工而非一个大脑），单个 AI 无法复制这种复杂性。' },
+        { side: '有损派 (Lambert/LSI)', argument: '自改进真实但非指数。"每个 sigmoid 底部像指数"——GPT-4 scaling、o1 reasoning 都趋平了。自改进同受限于：可自动化研究范围窄、并行 Amdahl 定律、组织政治。不是是否发生的问题，而是是否可持续的问题。' },
       ],
       status: 'active',
     },
@@ -210,15 +206,6 @@ const fieldMap: FieldMap = {
       status: 'active',
     },
     {
-      id: 'tension-individual-vs-distributed',
-      question: '单个系统能超越分布式人类智慧吗？',
-      positions: [
-        { side: '个体论者 (Yudkowsky)', argument: 'AlphaGo Zero 单个系统三天超人类几世纪围棋智慧。Kasparov vs The World 也输了。人类并行低效——沟通成本 N(N-1)/2。单个足够强的系统可胜任何规模分布式协作。' },
-        { side: '分布式论者 (Chollet/Ball)', argument: '围棋和芯片制造不同。TSMC 能力来自 9 万互动员工。要实际改变需物理基础设施、供应链、政治谈判——不只是智力。知识隐性的、分布式的、嵌入组织文化。单个 AI 无法复制这种复杂性。' },
-      ],
-      status: 'active',
-    },
-    {
       id: 'tension-alignment-speed',
       question: '自改进应该追求速度还是追求安全？',
       positions: [
@@ -229,8 +216,8 @@ const fieldMap: FieldMap = {
     },
   ],
   readingPath: {
-    ifYouHave5Min: ['conceptual-origins-1', 'self-play-1', 'algorithm-discovery-1', 'continual-learning-3', 'industry-frontier-1', 'skepticism-1'],
-    ifYouHave30Min: ['conceptual-origins-1', 'conceptual-origins-2', 'conceptual-origins-4', 'self-play-1', 'self-play-2', 'self-play-3', 'algorithm-discovery-1', 'algorithm-discovery-2', 'algorithm-discovery-4', 'continual-learning-2', 'continual-learning-3', 'continual-learning-5', 'industry-frontier-1', 'industry-frontier-2', 'industry-frontier-4', 'skepticism-1', 'skepticism-3', 'skepticism-4', 'skepticism-6'],
+    ifYouHave5Min: ['conceptual-origins-1', 'evolutionary-search-1', 'evolutionary-search-3', 'continual-learning-3', 'industry-frontier-1', 'skepticism-1'],
+    ifYouHave30Min: ['conceptual-origins-1', 'conceptual-origins-2', 'conceptual-origins-4', 'evolutionary-search-1', 'evolutionary-search-3', 'evolutionary-search-4', 'evolutionary-search-6', 'continual-learning-2', 'continual-learning-3', 'continual-learning-5', 'industry-frontier-1', 'industry-frontier-2', 'industry-frontier-4', 'industry-frontier-6', 'skepticism-1', 'skepticism-3', 'skepticism-4', 'skepticism-6'],
   },
 };
 
