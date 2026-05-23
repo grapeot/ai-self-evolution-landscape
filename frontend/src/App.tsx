@@ -74,7 +74,10 @@ function App() {
                   {a.tier === 'primary' ? '首选' : a.tier === 'counterpoint' ? '反方' : '辅助'}
                 </span>
                 <div>
-                  <a href={a.url} target="_blank" rel="noopener">{a.title}</a>
+                  <a href={a.translatedUrl || a.url} target="_blank" rel="noopener">{a.title}{a.translatedUrl ? '（中译）' : ''}</a>
+                  {a.translatedUrl && (
+                    <> · <a href={a.url} target="_blank" rel="noopener" className="original-link">原文</a></>
+                  )}
                   <span className="relevance">{a.relevance}</span>
                 </div>
               </div>

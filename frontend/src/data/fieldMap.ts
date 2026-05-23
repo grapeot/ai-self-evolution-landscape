@@ -31,6 +31,7 @@ export interface Intuition {
 export interface ArticleRef {
   title: string;
   url: string;
+  translatedUrl?: string;  // Chinese translation, if available
   relevance: string;
   tier: 'primary' | 'supporting' | 'counterpoint';
 }
