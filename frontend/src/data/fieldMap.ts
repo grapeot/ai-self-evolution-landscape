@@ -128,6 +128,36 @@ const fieldMap: FieldMap = {
         { title: 'Nested Learning 论文 — NeurIPS 2025', url: 'https://arxiv.org/abs/2512.24695', relevance: '原始论文', tier: 'primary' },
         { title: 'HOPE 独立评测 — Chris Paxton', url: 'https://itcanthink.substack.com/p/paper-notes-nested-learning', relevance: '指出 scale 局限', tier: 'counterpoint' },
         { title: 'Darwin Godel Machine — Sakana AI', url: 'https://sakana.ai/darwin-godel-machine/', relevance: 'SWE-bench 20%→50%', tier: 'primary' },
+        { title: 'HyperAgents / DGM-H — Meta AI (2026)', url: 'https://arxiv.org/abs/2603.19461', relevance: '元认知自改进：元级修改过程本身可编辑，跨域迁移', tier: 'primary' },
+      ],
+    },
+    {
+      id: 'agentic-auto-research',
+      title: 'Agentic 自研究',
+      thesis: '与进化搜索（在固定 pipeline 内搜索最优解）不同，Agentic Auto-Research 系统自主规划和执行完整的研究工作流——从 idea 生成到实验执行到论文撰写到同行评审——并在过程中反思和修订自己的计划。这代表了从"搜索解空间"到"自主执行科学方法"的跃迁。',
+      intuitions: [
+        { id: 'agentic-auto-research-1', text: 'Sakana AI "The AI Scientist" (Nature, 2026 年 3 月) 是首批完整闭环系统：四个阶段——idea 生成（用 Semantic Scholar 做新颖性过滤）、实验执行（tree search 调试自己的代码）、论文撰写（LaTeX + 自动引用匹配 20 轮）、自动同行评审（5-reviewer ensemble）。其中一篇论文在 ICLR workshop 获得 human reviewer 评分 6.33/10，超过接受阈值。', type: 'fact', sources: [0] },
+        { id: 'agentic-auto-research-2', text: 'Google AI Co-Scientist (2025) 是多 agent 系统：Generation、Reflection、Ranking、Evolution、Proximity、Meta-review 六种 agent 组成自改进 tournament。采用 Elo 自动评估来校准推理质量。三项实验室验证结果：急性髓系白血病药物重定位（确认肿瘤抑制效果）、肝纤维化靶点发现（与 Stanford 合作）、抗菌素耐药性机制（独立提出后被实验证实，发表于 Cell）。', type: 'fact', sources: [1] },
+        { id: 'agentic-auto-research-3', text: 'Meta HyperAgents / DGM-H (2026) 是目前最清晰的元认知自改进实例。核心创新：元级修改过程本身可编辑——系统不仅改进输出，还进化改进过程。在运行中自发产生了性能追踪系统、持久化记忆和计算规划机制——这些都不是预先指定的。元级改进跨域迁移：在 coding 中学到的改进策略加速了 robotics 和 math grading 的自我提升。', type: 'fact', sources: [2] },
+        { id: 'agentic-auto-research-4', text: 'Agentic 系统和进化搜索系统的根本区别：AlphaEvolve 在固定 pipeline（LLM 生成→自动评估→保留最优）中搜索解——它的 LLM 集合、prompt 采样和 MAP-Elites 数据库都是人工设计的固定组件。Agentic 系统自主规划多阶段工作流、在阶段间传递状态、用反馈修订计划、在某些情况下自行生成评估标准。前者是"在给定空间内优化"，后者是"自己决定要做什么"。', type: 'opinion', sources: [0, 2] },
+        { id: 'agentic-auto-research-5', text: 'Analemma 的 FARS (Fully Automated Research System, 2026) 代表了工业化尺度：166 篇 ML 论文在 417 小时内完成，约 $1,100/篇。Google PaperOrchestra 则从研究员的原始实验日志自动生成投稿级论文，在 11 位 AI 研究者的盲评中超过现有系统。这两个案例表明自动研究的吞吐量已经进入生产级。', type: 'fact', sources: [3] },
+      ],
+      pros: [
+        '从"搜索解空间"到"自主执行科学方法"的跃迁——机制上有本质区别',
+        'AI Scientist 已通过 workshop 同行评审——闭环验证初步成立',
+        'HyperAgents 的元认知自改进是目前最接近"改进过程自我进化"的实例',
+      ],
+      cons: [
+        '目前仅在 narrow domains 验证（ML 论文、药物靶点），泛化性未证实',
+        'AI Scientist 的论文质量仍低于顶会标准（workshop 级别）',
+        'FARS 的"166 篇/417 小时"侧重于吞吐量而非深度——量不等于质',
+        'Agentic 系统中的反思和元认知可能只是表面现象而非真正理解',
+      ],
+      articles: [
+        { title: '"The AI Scientist" — Nature (2026)', url: 'https://www.nature.com/articles/s41586-026-10265-5', relevance: '首个完整闭环自动科研系统，通过 workshop 同行评审', tier: 'primary' },
+        { title: 'AI Co-Scientist — Google Research (2025)', url: 'https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/', relevance: '多 agent tournament 架构，三项实验室验证', tier: 'primary' },
+        { title: 'HyperAgents / DGM-H — Meta AI (2026)', url: 'https://arxiv.org/abs/2603.19461', relevance: '元认知自改进：元级修改过程可编辑，跨域迁移', tier: 'primary' },
+        { title: 'FARS / PaperOrchestra (2026)', url: 'https://theconversation.com/ai-is-generating-research-papers-on-its-own-scientists-are-using-them-255719', relevance: '工业化自动科研 + 盲评超越现有系统', tier: 'supporting' },
       ],
     },
     {
@@ -225,8 +255,8 @@ const fieldMap: FieldMap = {
     },
   ],
   readingPath: {
-    ifYouHave5Min: ['conceptual-origins-1', 'evolutionary-search-1', 'evolutionary-search-3', 'continual-learning-3', 'industry-frontier-1', 'skepticism-1'],
-    ifYouHave30Min: ['conceptual-origins-1', 'conceptual-origins-2', 'conceptual-origins-4', 'evolutionary-search-1', 'evolutionary-search-3', 'evolutionary-search-4', 'evolutionary-search-6', 'continual-learning-2', 'continual-learning-3', 'continual-learning-5', 'industry-frontier-1', 'industry-frontier-2', 'industry-frontier-4', 'industry-frontier-6', 'skepticism-1', 'skepticism-3', 'skepticism-4', 'skepticism-6'],
+    ifYouHave5Min: ['conceptual-origins-1', 'evolutionary-search-1', 'evolutionary-search-3', 'continual-learning-3', 'agentic-auto-research-1', 'industry-frontier-1', 'skepticism-1'],
+    ifYouHave30Min: ['conceptual-origins-1', 'conceptual-origins-2', 'conceptual-origins-4', 'evolutionary-search-1', 'evolutionary-search-3', 'evolutionary-search-4', 'evolutionary-search-6', 'continual-learning-2', 'continual-learning-3', 'continual-learning-5', 'agentic-auto-research-1', 'agentic-auto-research-3', 'agentic-auto-research-4', 'industry-frontier-1', 'industry-frontier-2', 'industry-frontier-4', 'industry-frontier-6', 'skepticism-1', 'skepticism-3', 'skepticism-4'],
   },
 };
 
