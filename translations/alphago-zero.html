@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaGo Zero——无需人类知识 mastering 围棋</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 2em auto; padding: 0 1em; line-height: 1.8; color: #222; }
+  h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+  .meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+  .access-note { background: #fdf6ec; border-left: 4px solid #f5a623; padding: 0.8em 1em; margin: 1em 0; border-radius: 4px; font-size: 0.9em; color: #555; }
+  .section { margin: 1.5em 0; }
+  .section h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+  p { text-align: justify; }
+  a { color: #0366d6; }
+  .original-link { display: inline-block; margin-top: 2em; padding: 0.5em 1em; background: #0366d6; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+  .original-link:hover { background: #0256b4; }
+</style>
+</head>
+<body>
+
+<h1>AlphaGo Zero：无需人类知识掌握围棋</h1>
+<div class="meta">
+  <strong>David Silver</strong>, Julian Schrittwieser, Karen Simonyan 等 · Nature 550, 354–359 (2017) ·
+  <a href="https://doi.org/10.1038/nature24270">doi:10.1038/nature24270</a>
+</div>
+
+<div class="access-note">
+  ⚠ 本文位于 Nature 付费墙后。以下翻译基于公开摘要、编辑摘要和开放获取的补充信息。完整论文内容需通过机构订阅或购买获取。
+</div>
+
+<div class="section">
+<h2>摘要</h2>
+<p>人工智能领域的一个长期目标，是拥有一种能够从零开始（tabula rasa）学习、在具有挑战性的领域中达到超人类水平的算法。此前，AlphaGo 成为第一个在围棋游戏中击败世界冠军的程序。AlphaGo 中的树搜索通过深度神经网络评估局面并选择落子。这些神经网络通过监督学习（从人类专家棋谱）和强化学习（自我对弈）进行训练。本文介绍了一种完全基于强化学习的算法，不依赖人类数据、指导或除游戏规则之外的领域知识。AlphaGo 成为自己的老师：一个神经网络被训练来预测 AlphaGo 自己的落子选择以及 AlphaGo 对局的胜负结果。这个神经网络提升了树搜索的强度，从而在下一轮迭代中产生更高质量的落子选择和更强的自我对弈。从零开始，我们的新程序 AlphaGo Zero 达到了超人类水平，以 100–0 的战绩击败了此前发布并曾战胜世界冠军的 AlphaGo。</p>
+</div>
+
+<div class="section">
+<h2>核心方法</h2>
+<p>AlphaGo Zero 的核心创新在于完全去除了对人类知识的依赖。此前的 AlphaGo 版本（AlphaGo Lee）首先通过监督学习从数十万人类专家的对局中学习，然后再通过强化学习自我改进。AlphaGo Zero 则仅通过自我对弈进行学习，唯一的输入是棋盘上的黑白棋子位置。</p>
+<p>系统使用一个单一的深度神经网络，而非此前的两个独立网络（策略网络和价值网络）。这个网络同时输出落子概率和局面估值。在自我对弈过程中，神经网络与蒙特卡洛树搜索（MCTS）相结合：MCTS 使用神经网络来指导搜索，搜索的结果反过来又用于改进神经网络。</p>
+<p>训练从完全随机的落子开始。经过仅 72 小时的训练（约 500 万局自我对弈），AlphaGo Zero 就达到了超越所有此前版本的水平。相比之下，AlphaGo Lee 经过了数月的训练。</p>
+</div>
+
+<div class="section">
+<h2>关键成果</h2>
+<p>AlphaGo Zero 以 100–0 的压倒性比分击败了 AlphaGo Lee（此前击败李世石的版本）。在与 AlphaGo Master（击败柯洁的版本）的对阵中，AlphaGo Zero 也取得了 89–11 的压倒性胜利。</p>
+<p>值得注意的是，AlphaGo Zero 独立重新发现了人类围棋智慧在数千年中积累的许多定式和策略，包括一些人类棋手尚未探索的全新变招。这表明这些围棋原理具有一定的普适性，超越了人类经验的局限。</p>
+<p>更大的网络（40 个残差块而非 20 个）和更长时间的训练（40 天）进一步提升了性能，表明在足够计算资源下，从零开始的纯强化学习方法可以达到更高的水平。</p>
+</div>
+
+<div class="section">
+<h2>意义与影响</h2>
+<p>AlphaGo Zero 的贡献远超出了围棋本身。它证明了在某些领域，纯强化学习可以完全取代对人类数据的依赖，从零开始达到甚至超越专家水平。这一范式——即通过大量自我对弈生成训练数据、使用神经网络引导搜索、形成自我改进的闭环——已被广泛应用于后续的诸多 AI 突破中，包括 AlphaFold、AlphaTensor 等。</p>
+<p>编辑摘要指出："因为机器独立发现了人类花费数千年才概念化的相同围棋基本原理，这项工作表明这些原理具有某些超越人类偏见的普适性。"</p>
+</div>
+
+<a class="original-link" href="https://www.nature.com/articles/nature24270" target="_blank">原文链接 · Nature</a>
+
+</body>
+</html>

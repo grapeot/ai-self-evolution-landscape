@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FunSearch——基于大语言模型的程序搜索实现数学发现</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 2em auto; padding: 0 1em; line-height: 1.8; color: #222; }
+  h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+  .meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+  .access-note { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 0.8em 1em; margin: 1em 0; border-radius: 4px; font-size: 0.9em; color: #555; }
+  .section { margin: 1.5em 0; }
+  .section h2 { font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+  p { text-align: justify; }
+  a { color: #0366d6; }
+  .original-link { display: inline-block; margin-top: 2em; padding: 0.5em 1em; background: #0366d6; color: #fff; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+  .original-link:hover { background: #0256b4; }
+</style>
+</head>
+<body>
+
+<h1>FunSearch：通过大语言模型的程序搜索实现数学发现</h1>
+<div class="meta">
+  <strong>Bernardino Romera-Paredes</strong>, Mohammadamin Barekatain, Alexander Novikov, Matej Balog 等 · Nature 625, 468–475 (2024) ·
+  <a href="https://doi.org/10.1038/s41586-023-06924-6">doi:10.1038/s41586-023-06924-6</a> · 开放获取
+</div>
+
+<div class="access-note">
+  ✅ 本文为开放获取（Open Access），全文可在 Nature 网站免费阅读。
+</div>
+
+<div class="section">
+<h2>摘要</h2>
+<p>大语言模型（LLM）在解决复杂任务方面展现了强大的能力，从定量推理到自然语言理解。然而，LLM 有时会产生虚构（或称幻觉），即做出看似合理但不正确的陈述。这阻碍了当前大模型在科学发现中的应用。本文介绍了 FunSearch（"函数空间搜索"的缩写），这是一种将预训练 LLM 与系统评估器配对的进化式方法。我们证明了该方法在重要问题上超越已知最佳结果的有效性，推进了现有基于 LLM 的方法的边界。将 FunSearch 应用于极值组合学中的一个核心问题——cap set 问题——我们发现了超越已知结果的新的大 cap set 构造，包括有限维和渐近情况。这表明使用 LLM 在既有的开放问题上取得发现是可能的。我们还通过将 FunSearch 应用于算法问题——在线装箱问题——展示了其通用性，发现了能改进广泛使用的基线的新启发式策略。与大多数计算机搜索方法不同，FunSearch 搜索的是<em>如何</em>解决问题的程序，而不是直接搜索<em>什么</em>是解决方案。除了作为有效且可扩展的策略外，所发现的程序往往比原始解决方案更具可解释性，使领域专家与 FunSearch 之间能够形成反馈循环，并支持这些程序在现实世界应用中的部署。</p>
+</div>
+
+<div class="section">
+<h2>方法：FunSearch 的工作原理</h2>
+<p>FunSearch 的核心思想是将 LLM 的创造性生成能力与演化算法的系统搜索能力相结合。具体工作流程如下：</p>
+<p>首先，一个预训练的代码 LLM（如 PaLM 2 的代码变体）接收一个问题的自然语言描述和一个初始程序种子（通常是一个简单的启发式算法）。LLM 被要求生成该程序的新变体，通过修改代码来探索函数空间。每个生成的程序在目标问题上被自动评估（例如，计算 cap set 的大小或装箱策略的浪费比率）。评估分数最高的程序被选为"精英"进入下一轮迭代。在每一轮中，系统从精英池中随机选择一个程序，将其与问题描述一起输送给 LLM，要求 LLM 生成改进版本。这一循环持续进行，类似于进化算法中的变异-选择过程。</p>
+<p>关键在于，LLM 为演化搜索提供了强大的"变异算子"——它不是在随机改变代码，而是基于对问题语义的理解生成有意义的变体，这使得搜索比传统遗传编程更高效。</p>
+</div>
+
+<div class="section">
+<h2>Cap Set 问题上的突破</h2>
+<p>Cap set 问题是极值组合学中的一个核心开放问题：在 n 维有限域 F₃ⁿ 中，不含三个共线点（三个成等差数列的点）的最大子集有多大？这个问题有着丰富的数学历史，陶哲轩等数学家曾深入研究。FunSearch 为 F₃⁸ 发现了大小为 512 的 cap set，这与已知的最佳构造相当；更重要的是，它发现了新的构造模式，为渐近情况提供了新的见解。FunSearch 发现的程序揭示了一些人类数学家尚未发现的对称性和构造原则。</p>
+</div>
+
+<div class="section">
+<h2>在线装箱问题上的应用</h2>
+<p>在在线装箱问题中，物品按顺序到达，必须立即放入箱子中，不能重新排列。这是一个经典的算法问题，具有广泛的实际应用。FunSearch 发现了新的启发式策略，在多个基准测试上超越了已建立的方法（如 First Fit、Best Fit 及其改进版本），展示了该方法跨领域泛化的能力。</p>
+</div>
+
+<div class="section">
+<h2>意义与局限</h2>
+<p>FunSearch 的意义在于它首次展示了 LLM 可用于在既有科学问题上做出真正的发现——不仅仅是辅助人类推理，而是直接产生超越已知结果的新知识。相比其他计算机搜索方法（如暴力搜索或传统遗传算法），FunSearch 搜索的是可解释的程序而非原始数据，这使人类专家能够理解和验证其结果。</p>
+<p>局限性包括：对于问题描述的依赖（LLM 需要清晰的问题边界）、计算成本仍然较高，以及并非所有类型的问题都适合这种程序搜索范式。</p>
+</div>
+
+<a class="original-link" href="https://www.nature.com/articles/s41586-023-06924-6" target="_blank">原文链接 · Nature (开放获取)</a>
+
+</body>
+</html>

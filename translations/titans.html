@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Titans：在测试时学习记忆 — Behrouz 等人 (2024)</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<h1>Titans：在测试时学习记忆</h1>
+<div class="meta">Ali Behrouz, Peilin Zhong, Vahab Mirrokni · Google Research · 2024 年 12 月 · arXiv:2501.00663</div>
+<a class="original-link" href="https://arxiv.org/abs/2501.00663" target="_blank">原文链接 →</a>
+
+<p>过去十多年来，学术界一直在广泛探索如何有效利用循环模型和注意力机制。循环模型试图将数据压缩为固定大小的记忆（即隐藏状态），而注意力机制则允许模型关注整个上下文窗口，捕捉所有 token 之间的直接依赖关系。</p>
+
+<p>然而，这种更精确的依赖建模是有代价的：注意力的计算成本是二次方的，这限制了模型只能处理固定长度的上下文。这一矛盾构成了当前序列建模架构的核心困境——要么压缩但丢失信息，要么精确但无法扩展。</p>
+
+<h2>神经长期记忆模块</h2>
+
+<p>本文提出了一个新的<strong>神经长期记忆模块（neural long-term memory module）</strong>，它能够学习记忆历史上下文，帮助注意力机制在利用长期信息的同时专注于当前上下文。实验证明，这种神经记忆兼具快速并行化训练和高效推理的优势。</p>
+
+<p>从记忆的角度看，作者认为注意力机制由于其有限的上下文范围但精确的依赖建模，扮演了<strong>短期记忆</strong>的角色；而神经记忆由于能够记忆数据，充当了更持久的<strong>长期记忆</strong>。</p>
+
+<h2>Titans 架构家族</h2>
+
+<p>基于这两个模块，作者提出了一组新的架构家族——<strong>Titans</strong>——并给出了三种变体，探讨如何有效地将记忆融入该架构：</p>
+
+<p><strong>记忆作为上下文（Memory as Context）</strong>：将长期记忆的内容作为额外的上下文输入，与当前序列拼接后送入注意力模块。这种方式直接利用了长期记忆中与当前任务相关的信息。</p>
+
+<p><strong>记忆作为门控（Memory as Gate）</strong>：用长期记忆的表示来门控注意力输出的信息流，让模型决定从长期记忆中保留多少信息。这种机制更精细化地控制了记忆与当前上下文的融合。</p>
+
+<p><strong>记忆作为层（Memory as Layer）</strong>：将神经记忆作为一个独立的网络层，与注意力层交替堆叠。这种设计在架构层面实现了短期记忆与长期记忆的协同工作。</p>
+
+<h2>实验结果</h2>
+
+<p>在语言建模、常识推理、基因组学和时间序列任务上的实验表明，Titans 比 Transformer 和最近提出的现代线性循环模型更有效。更令人印象深刻的是，它们可以有效地扩展到超过 <strong>200 万 token</strong> 的上下文窗口大小，并在"大海捞针"测试中达到比基线更高的准确率。</p>
+
+<p>这项工作将注意力机制的精确短期记忆与神经记忆的持久长期记忆统一在一个框架内，为突破 Transformer 的上下文长度瓶颈提供了一条新路径。</p>
+
+</body>
+</html>

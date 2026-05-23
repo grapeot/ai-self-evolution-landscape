@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论智力的度量 — François Chollet (2019)</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<h1>论智力的度量</h1>
+<div class="meta">François Chollet · 2019 年 11 月 · arXiv:1911.01547</div>
+<a class="original-link" href="https://arxiv.org/abs/1911.01547" target="_blank">原文链接 →</a>
+
+<p>要让人工智能系统朝着更加智能、更像人类的方向稳步前进，我们需要一个恰当的反馈信号——也就是说，我们需要能够定义和评估智力，从而能在两个系统之间、以及系统和人类之间进行有意义的比较。过去一百年间，心理学和人工智能两个领域涌现了大量定义和测量智力的尝试。</p>
+
+<p>本文对这些定义和评估方法进行了系统的梳理与批判性审视，揭示出隐藏在它们背后的两种历史性智力观念。作者指出，在当今的 AI 实践中，人们仍然倾向于通过比较 AI 和人类在特定任务（如棋类游戏和电子游戏）中表现出的技能水平来衡量智力。</p>
+
+<p>文章的核心论点是：仅仅测量在特定任务上的技能远远不足以衡量智力，因为技能在很大程度上受到先验知识和经验的调节——无限制的先验知识或训练数据使实验者可以为系统"购买"任意水平的技能，从而掩盖系统自身的泛化能力。</p>
+
+<p>在此基础上，作者提出了一个新的基于算法信息论的智力形式定义：将智力定义为技能获取效率（skill-acquisition efficiency），并强调了范围（scope）、泛化难度（generalization difficulty）、先验知识（priors）和经验（experience）这四个核心概念。依据这一定义，文章为通用人工智能基准测试应具备的特征提出了一套指导原则。</p>
+
+<p>最后，作者提出了一个紧密遵循这些指导原则的基准测试——抽象与推理语料库（Abstraction and Reasoning Corpus，简称 ARC）。ARC 构建在一组明确设计的先验知识之上，力求尽可能接近人类与生俱来的先验。作者认为，ARC 可用于衡量类人形式的通用流体智力，并为 AI 系统和人类之间的公平智能比较提供了可能。</p>
+
+<h2>关键贡献</h2>
+
+<p><strong>对现有智力测量的批判</strong>：系统梳理了心理学和 AI 领域的智力定义与评估方法，揭示出暗含其中的两种历史性智力观念——以表现为中心的观念和以适应性/泛化为中心的观念。</p>
+
+<p><strong>技能不等于智力</strong>：证明了仅通过技能水平来评判智力存在根本缺陷。技能可以被先验知识和数据量所"购买"，无法反映系统真实的泛化能力。这与深度学习领域中无处不在的"大力出奇迹"现象形成了深刻对照。</p>
+
+<p><strong>智力的形式化定义</strong>：将智力重新定义为技能获取效率，强调在给定经验条件下系统获得新技能的速率，而非已经掌握的技能水平。</p>
+
+<p><strong>ARC 基准测试</strong>：提供了一个强调泛化能力而非规模效应的评估框架，对 AI 社区产生了深远影响——它揭示出当前深度学习范式的根本局限，并指出了通往更通用智力的可能路径。</p>
+
+</body>
+</html>
