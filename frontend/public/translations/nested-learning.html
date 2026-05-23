@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nested Learning：一种新的持续学习 ML 范式 — Google Research</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>Nested Learning：一种新的持续学习 ML 范式</h1>
+
+<div class="original-link">
+  <a href="https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/" target="_blank">原文链接 →</a>
+</div>
+
+<p>2025 年 11 月 7 日 · Ali Behrouz（学生研究员）和 Vahab Mirrokni（VP 兼 Google Fellow），Google Research</p>
+
+<p>我们提出 Nested Learning，这是一种新的机器学习方法，将模型视为一组相互嵌套的小优化问题，每个问题都有自己的内部工作流，目的是减轻甚至完全避免"灾难性遗忘"——即学习新任务时牺牲旧任务熟练度的问题。</p>
+
+<h2>Nested Learning 范式</h2>
+
+<p>Nested Learning 揭示了一个事实：复杂的 ML 模型实际上是一组相互嵌套或并行运行的、彼此关联的优化问题。这些内部问题各自拥有自己的<strong>上下文流</strong>——一组独特的信息来源，它试图从中学习。</p>
+
+<p>从这个角度看，现有深度学习方法的本质是对内部上下文流进行<strong>压缩</strong>。更重要的是，Nested Learning 揭示了一个新的模型设计维度，使我们能够构建具有更深计算深度的学习组件。</p>
+
+<p>为了说明这个范式，我们来看<strong>联想记忆</strong>的概念——根据一件事联想和回忆另一件事的能力（比如看到脸就想起名字）。</p>
+
+<ul>
+  <li>训练过程本身，特别是反向传播，可以被建模为一种联想记忆。模型学习将给定数据点映射到其局部误差的值，这个值衡量该数据点有多"令人意外"。</li>
+  <li>类似地，参照此前研究，关键的架构组件——如 Transformer 中的注意力机制——也可以形式化为简单的联想记忆模块，学习 token 序列之间的映射。</li>
+</ul>
+
+<h2>应用 Nested Learning</h2>
+
+<h3>深层优化器</h3>
+<p>Nested Learning 将优化器视为联想记忆模块，这让我们可以应用联想记忆的原理。许多标准优化器依赖简单的点积相似度，其更新方式不考量不同数据样本之间的关系。通过将优化器的底层目标改为更标准的损失指标（如 L2 回归损失），我们推导出动量等核心概念的新形式，使其对不完美数据更鲁棒。</p>
+
+<h3>连续统记忆系统</h3>
+<p>在标准 Transformer 中，序列模型充当短期记忆，保存即时上下文，而前馈神经网络充当长期记忆，存储预训练知识。Nested Learning 将这个理念扩展为"连续统记忆系统"——记忆被看作一个模块谱系，每个模块以不同频率更新，为持续学习创造了更丰富、更有效的记忆系统。</p>
+
+<h2>Hope：具有连续统记忆的自我修改架构</h2>
+<p>作为概念验证，我们利用 Nested Learning 原理设计了 Hope，这是 Titans 架构的一个变体。Titans 架构是长期记忆模块，根据信息的意外程度来优先级排序。Hope 是一种自我修改的循环架构，可以利用无限制的上下文学习层级，并配备 CMS 块来扩展到更大的上下文窗口。它通过自我参照的过程优化自身的记忆，创造了具有无限循环学习层级的架构。</p>
+
+<h3>实验结果</h3>
+<p>在语言建模和常识推理任务上，Hope 架构相比现代循环模型和标准 Transformer 表现出更低的困惑度和更高的准确率。在长上下文 Needle-In-Haystack 任务中，Hope 展示了更优的记忆管理能力，证明连续统记忆系统是处理扩展序列信息的更有效方式。</p>
+
+<h2>结论</h2>
+<p>Nested Learning 范式代表了我们对深度学习理解的进步。通过将架构和优化视为一个单一的、由嵌套优化问题组成的协调系统，我们打开了一个新的设计维度——可以堆叠多个层级。由此产生的模型（如 Hope 架构）表明，统一这些要素的原则性方法可以产生更具表现力、更强大、更高效的学习算法。</p>
+
+<p>我们相信 Nested Learning 范式为弥合当前 LLM 的限制性遗忘特性与人类大脑卓越的持续学习能力之间的差距提供了坚实基础。</p>
+
+<div class="footer">
+  <p>原文：<a href="https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/" target="_blank">Introducing Nested Learning: A new ML paradigm for continual learning — Google Research</a></p>
+  <p>论文：<a href="http://abehrouz.github.io/files/NL.pdf" target="_blank">Nested Learning: The Illusion of Deep Learning Architectures</a>（NeurIPS 2025）</p>
+</div>
+</article>
+</body>
+</html>

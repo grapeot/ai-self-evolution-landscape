@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HyperAgents — Meta AI 自我改进智能体新框架</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>HyperAgents：迈向通用自我改进 AI 的新框架</h1>
+<p style="color:#888;">Meta AI · 2026 年 3 月（论文发表于 arXiv）</p>
+
+<div class="original-link">
+  <a href="https://venturebeat.com/orchestration/meta-researchers-introduce-hyperagents-to-unlock-self-improving-ai-for-non-coding-tasks" target="_blank">原文链接（VentureBeat 报道）→</a>
+  <br>
+  <a href="https://arxiv.org/abs/2603.19461" target="_blank">论文原文 →</a>
+</div>
+
+<p>创建自我改进的 AI 系统是在动态环境中部署智能体的重要一步，尤其是在企业生产环境中。当前自我改进 AI 系统面临严重局限：它们依赖固定的人工设计的改进机制，仅在编码等严格条件下有效。Meta 和几所大学的研究人员提出了"hyperagents"（超智能体），一种持续重写和优化自身问题解决逻辑及底层代码的自我改进 AI 系统。</p>
+
+<p>在实际应用中，这使得 AI 可以在非编码领域（如机器人学和文档审查）中进行自我改进。智能体独立发明了持久化记忆和自动性能跟踪等通用能力。更广泛地说，hyperagents 不仅变得更擅长解决任务，它们还学会了改进自我改进的循环本身，从而加速进步。</p>
+
+<h2>当前自我改进 AI 的架构瓶颈</h2>
+<p>大多数现有自我改进模型依赖固定的"元智能体"——一个静态的高级监督系统，负责修改基础系统。论文合著者 Jenny Zhang 指出："手工制作的元智能体的核心局限在于，它们只能以人类设计和维护它们的速度来改进。每当有东西改变或出问题，就需要人工介入更新规则或逻辑。"这造成了一堵实际的"维护墙"。</p>
+
+<p>为了克服这一局限，研究人员认为 AI 系统必须做到"完全自我参照"——能够分析、评估和重写自身的任何部分，不受初始设置的限制。</p>
+
+<h2>Hyperagent 框架</h2>
+<p>传统系统将角色分为"任务智能体"（执行具体问题）和"元智能体"（分析和修改智能体）。Hyperagent 将两者融合为一个单一的、自我参照的、可编辑的程序。因为整个程序可以被重写，系统可以修改自我改进机制本身——研究人员称之为<strong>元认知自我修改</strong>。</p>
+
+<p>研究人员扩展了 Darwin Gödel Machine 以创建 DGM-Hyperagents（DGM-H）。DGM-H 保留了原始 DGM 强大的开放探索结构，同时消除了固定的、人工设计的指令步骤，使智能体能够在任何可计算任务上自我改进。</p>
+
+<h2>实验表现</h2>
+<p>在编码基准上，hyperagents 匹配了 DGM 的表现。在论文评审和机器人学领域，hyperagents 超越了开源基线和人工设计的奖励函数。更令人印象深刻的是，将一个为论文评审和机器人学优化的 hyperagent 部署到未见过的数学评分任务上时，它在 50 次迭代内达到了 0.630 的改进指标，而基线保持在 0.0——甚至击败了领域专门的 ProofAutoGrader。</p>
+
+<p>Hyperagents 还自主展现了有趣的行为：它开发了多阶段评估流程、持久化记忆工具避免重复错误、性能跟踪器来监控各代之间的架构变化，甚至产生了计算预算感知行为——早期代执行激进的架构变更，后期代聚焦于保守的增量优化。</p>
+
+<h2>安全考量</h2>
+<p>自我改进系统如果发展太快可能导致人类无法审计或解释。研究人员将 DGM-H 限制在沙箱环境中。Zhang 建议开发者强制资源限制并限制对外部系统的访问。另一个重要风险是评估博弈——AI 可能通过利用评估流程的盲点来人为提高分数。这要求开发者实施多样化的、健壮的评估协议和持续的人工监督。</p>
+
+<h2>未来前景</h2>
+<p>随着自我改进系统变得更强大，问题不再只是如何提高性能，而是追求什么目标是有价值的。人类工程师的角色将从此演进——从构建系统变为塑造系统的方向。</p>
+
+<div class="footer">
+  <p>报道原文：<a href="https://venturebeat.com/orchestration/meta-researchers-introduce-hyperagents-to-unlock-self-improving-ai-for-non-coding-tasks" target="_blank">Meta researchers introduce 'hyperagents' to unlock self-improving AI for non-coding tasks — VentureBeat</a></p>
+  <p>论文：<a href="https://arxiv.org/abs/2603.19461" target="_blank">Hyperagents — arXiv</a></p>
+  <p>代码：<a href="https://github.com/facebookresearch/Hyperagents" target="_blank">github.com/facebookresearch/Hyperagents</a>（非商业许可证）</p>
+</div>
+</article>
+</body>
+</html>

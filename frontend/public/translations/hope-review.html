@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文笔记：Nested Learning — Chris Paxton 评测</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>论文笔记：Nested Learning</h1>
+<p style="color:#888;">Chris Paxton · 2025 年 11 月 20 日</p>
+
+<div class="original-link">
+  <a href="https://itcanthink.substack.com/p/paper-notes-nested-learning" target="_blank">原文链接 →</a>
+</div>
+
+<p>Google 的新论文《Nested Learning》旨在通过将机器学习优化问题视为一组嵌套的子问题来实现 AI 的终身学习。用作者的话说：</p>
+
+<blockquote style="border-left:3px solid #ddd;margin:1em 0;padding:0.5em 1em;color:#555;">
+我们提出 Nested Learning，一种新的机器学习方法，将模型视为一组更小、嵌套的优化问题，每个问题都有自己的内部工作流，以减轻甚至完全避免"灾难性遗忘"。
+</blockquote>
+
+<h2>问题：灾难性遗忘</h2>
+<p>核心问题在于：假设我训练了一个可以收拾杯子的机器人（数据集 A），然后想扩展它去收拾玩具（数据集 B）。如果只在 B 上继续训练，模型在 A 上的性能会丧失。理想情况下，我们需要在不完全重训所有旧数据的情况下更新策略。当前的解决方案通常是"从所有数据集采样"，但这要求永远存储无限的数据。</p>
+
+<h2>Nested Learning 的解决方案</h2>
+<p>关键洞察在于：基于动量的优化器（如 Adam）本身也是一种联想记忆——本质上就是一个模型。因此，我们可以将学习问题构造为一组嵌套的优化问题，以不同速度运行：内部循环快速更新以捕捉新信息，外部循环慢速更新以捕捉更通用的知识。较慢的外部循环可以锚定新信息，防止模型遗忘。</p>
+
+<p>论文的核心主张是<strong>架构是一种幻觉</strong>：优化器和神经网络本质上是同一件事——联想记忆。注意力机制是将 token 映射到其他 token 的联想记忆；动量是将梯度映射到更新的记忆。因此，训练一个神经网络可以理解为在训练数据集上构建数据点与其局部意外信号之间的映射。基于动量的优化器则成为第二层联想记忆，外层根据内层记忆（即预测误差）更新权重。</p>
+
+<h2>HOPE 架构</h2>
+<p>HOPE 是一个"具有连续统记忆的自我参照学习模块"——它是按频率递增方式嵌套的神经网络块链。在标准的"训练-评估"分离的 Transformer 中，我们关心两种时间频率：通用信息只在训练时编码一次，局部信息只在上下文窗口中编码。但在 HOPE 中，有<strong>许多</strong>模块，每个模块都在学习如何更新它下面的模块，并以不同的速率运行，这使其适应性更强。</p>
+
+<p>该架构建立在 Titans 之上。虽然这些仍是极为初步的 ML 理论，但语言建模的结果看起来很有希望，在长时域任务上也表现出色。</p>
+
+<h2>最终思考</h2>
+<p>Transformer 在上下文长度和 token 化需求等方面存在固有的局限。Transformer 终究会停止扩展，因此这类架构很有吸引力。当然，像这样的理论论文距离在实际任务上使用还有距离——Titans 和 HOPE 不会明年就取代 GPT。但背后的想法——我们对神经网络的思考方式可能是错的，"优化器"和"模块"不是离散实体——非常有启发性，潜力巨大。</p>
+
+<div class="footer">
+  <p>原文：<a href="https://itcanthink.substack.com/p/paper-notes-nested-learning" target="_blank">Paper Notes: Nested Learning — It Can Think! (Chris Paxton)</a></p>
+  <p>论文：<a href="https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/" target="_blank">Nested Learning: The Illusion of Deep Learning Architectures — Google Research</a></p>
+</div>
+</article>
+</body>
+</html>
