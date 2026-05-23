@@ -16,6 +16,14 @@
 - 写 README（中文）
 - 更新 WORKSPACE.md 和 skills/INDEX.md
 
+## 2026-05-22 — 启动完整 pipeline：Phase 1 深度调研
+
+- Tavily 4 路并行搜索：overview、criticism、technical depth、industry funding
+- 新发现的重要来源：ICLR 2026 RSI Workshop、Dean W. Ball 分析、MIRI reply to Chollet、Stanford Continually Self-Improving AI 博士论文
+- Recursive 融资细节：$650M at $4.65B valuation, Richard Socher 领导, <30人团队, 计划 2026 中公开发布
+- 启动 7 个并行 sub-agent：4 个逐篇读 19 篇文章 + 3 个深层调研
+- 建 tmp/session_20260522/ 存放中间产物
+
 ## 设计决策
 
 - React + Vite 而非 Python 静态生成器：gh-pages 支持更好
