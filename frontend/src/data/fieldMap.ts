@@ -82,13 +82,14 @@ const fieldMap: FieldMap = {
       title: '自对弈与进化搜索',
       thesis: '从 AlphaZero（游戏中的自对弈）到 AlphaEvolve（生产环境中的进化搜索），这条路线证明了同一个核心机制——"生成-评估-迭代"——可以从零人类数据出发，在封闭规则系统和可量化评估的开放域中都达到超人类水平。但关键约束未变：必须有可自动计算的评估函数，否则选择压力无法建立。"开放"与"封闭"的区别不在机制，在评估函数的可得性。',
       intuitions: [
-        { id: 'evolutionary-search-1', text: 'AlphaZero (2018) 是 proof of concept：从零开始 4 小时超越 Stockfish。具体机制：每步 1,600 次 MCTS 模拟，每代 25,000 局自对弈，新旧网络 400 局/55% 阈值替换，200 代。Magnus Carlsen 后来的正式比赛采用了它的策略。AlphaGo→AlphaGo Zero→AlphaZero 的演进展示了"逐步移除人类先验"的通用模式。', type: 'fact', sources: [0, 1] },
+        { id: 'evolutionary-search-1', text: 'AlphaGo Zero (2017) 首次证明零人类数据的自改进可行：从零开始用自对弈训练，每代 25,000 局，新旧网络打 400 局，55% 胜率即替换，共 200 代。AlphaZero (2018) 进一步简化——去掉评估门，单一网络持续更新，跨三种游戏泛化。Magnus Carlsen 后来的正式比赛采用了 AlphaZero 首创的侧翼兵推进策略。', type: 'fact', sources: [0, 1] },
         { id: 'evolutionary-search-2', text: 'AlphaZero 的硬件不对称是一个被低估的 caveat：跑在 TPU 上而 Stockfish 跑在 CPU 上。论文注释 23 承认此差异。AlphaStar 和 OpenAI Five 在更复杂游戏中的训练时间（10 个月）和泛化受限也提示：自对弈效率随环境复杂度非线性下降。', type: 'opinion', sources: [0, 2] },
         { id: 'evolutionary-search-3', text: 'AlphaEvolve (2025) 将自对弈逻辑搬到算法空间——LLM 生成候选解 → 自动评估器打分 → 保留最优 → 迭代。四项生产级成果：(1) Google Borg 调度恢复 0.7% 全球算力；(2) Gemini 内核提速 23%（训练时间减 1%）；(3) FlashAttention GPU 内核提速 32.5%；(4) TPU 电路将进下一代。2026 年影响力已扩展至基因组学、量子计算和物流。', type: 'fact', sources: [3, 4] },
         { id: 'evolutionary-search-4', text: 'AlphaEvolve 最被低估的特征是自指性：它优化了 Gemini 训练内核，而 Gemini 正是 AlphaEvolve 内部的 LLM——AI 在加速训练自己的组件。循环已闭合但范围窄（仅限特定内核）。1% 训练时间节省在多代训练中产生复利。', type: 'opinion', sources: [3, 4] },
         { id: 'evolutionary-search-5', text: 'AutoML-Zero (2020) 是学术前身——从基本数学运算进化出 SGD 和反向传播，证明了"去除人类先验后算法可被重新发现"。但它的遗产不是方法本身（从零搜索太慢），而是"不那么人类先验的搜索空间可以发现人类未想到的解"这个洞察——这正是 AlphaEvolve 用 LLM 做搜索引导后实现的。', type: 'opinion', sources: [5, 6] },
         { id: 'evolutionary-search-6', text: '可验证性约束（verifiability constraint）：DeepMind 论文自述"需要自动化评估指标，排除了需要人工实验的任务"。这是整个进化搜索路线的根限——战略规划、创意工作、开放科学推理等没有清晰"好坏"标准的领域，连选择压力都无法建立。AlphaEvolve 的 2026 扩展（基因组学、量子、物流）都是可量化验证的领域，不是随机挑选的——它们恰好属于"有评估器"的子集。', type: 'opinion', sources: [3, 7] },
         { id: 'evolutionary-search-7', text: '开源复现已超越 AlphaEvolve 在部分问题上。方法论优势在工程规模和应用广度而非模型质量——技术壁垒有限。同时 AlphaEvolve 不修改自己的搜索过程（LLM 集合、prompt 采样、MAP-Elites 数据库都是人工设计的固定组件），不是完整意义上的递归自改进。', type: 'opinion', sources: [8, 9] },
+        { id: 'evolutionary-search-8', text: '一条被早期版本忽略的关键路线：RL with Verifiers。OpenAI o1 和 DeepSeek R1 用规则验证器（数学答案正确性、代码测试通过）作为 RL 奖励信号，直接优化模型权重的推理能力。不同于 AlphaEvolve 的进化搜索（固定 pipeline 内生候选→外部评估），RL with Verifiers 属于"梯度层自改进"。STaR (2022) 是前身——模型对自己生成的推理链自评自训。这条路线和进化搜索互补：前者适合"有答案可验证"的推理任务，后者适合"有评估器可打分"的优化问题。', type: 'fact', sources: [10] },
       ],
       pros: [
         '从游戏（AlphaZero）到芯片/基因组/物流（AlphaEvolve），机制通用性已验证',
@@ -188,10 +189,10 @@ const fieldMap: FieldMap = {
       intuitions: [
         { id: 'industry-frontier-1', text: 'Recursive 全明星团队：CEO Richard Socher（You.com 创始人）；联创含 ViT 作者 Dosovitskiy、DeepMind 开放式进化负责人 Rocktaschel、POET 作者 Clune、前 Meta FAIR 总监 Tian。顾问 Peter Norvig。', type: 'fact', sources: [0, 1] },
         { id: 'industry-frontier-2', text: '技术路线：开放式进化（open-endedness），核心手段 rainbow teaming——两个 AI 对抗共同进化。Socher 区分自改进和 auto-research：前者需系统发展"对自身缺陷的自我意识"。', type: 'fact', sources: [0, 1] },
-        { id: 'industry-frontier-3', text: '三家自改进创业公司：Recursive（Socher, $650M/$4.65B）、SSI（Sutskever, $3B+/$32B）、Ricursive Intelligence（AlphaChip 分拆）。三家均无公开产品。一位分析师的观察是，市场在为"如果成立"的上行空间定价，而非为已验证的产品定价。', type: 'opinion', sources: [0, 3] },
+        { id: 'industry-frontier-3', text: '三家自改进创业公司：Recursive（Socher, $650M/$4.65B）、SSI（Sutskever, $1B+ 融资, 估值 ~$5B, 安全优先路线）、Ricursive Intelligence（AlphaChip 分拆）。三家均无公开产品。一位分析师的观察是，市场在为"如果成立"的上行空间定价，而非为已验证的产品定价。', type: 'opinion', sources: [0, 3] },
         { id: 'industry-frontier-4', text: '大实验室内部进展可能比创业公司更深入，但不透明。OpenAI 在构建"自动化 AI 研究员"（Altman 预计 2026 秋达到初级研究员水平）；Anthropic 多数代码已由 Claude 编写（Jack Clark 估计 60% 概率 2028 年底前出现能自主训练后继者的系统）；DeepMind 的 AlphaEvolve 已生产运行 1 年以上。但这些信息的公开程度有限，难以独立验证。', type: 'opinion', sources: [4] },
         { id: 'industry-frontier-5', text: 'Nvidia 和 AMD 同时投资 Recursive 不是巧合。如果自改进成真，最大瓶颈是算力——芯片公司是卖铲人。它们的参与表明认为自改进是近期计算需求驱动力，不只是遥远理论。', type: 'opinion', sources: [0] },
-        { id: 'industry-frontier-6', text: '自改进 AI 的安全哲学分裂成两条路线：Recursive 的开放式进化和 rainbow teaming 认为对抗性自我测试本身就是安全机制——两个 AI 互相攻击能暴露漏洞；SSI（Sutskever, $32B）则拒绝公开任何产品和路线图，认为自改进系统一旦启动就无法关闭，安全验证必须在封闭环境中预先完成。这两种路线代表了"开放即安全"和"封闭才安全"的根本分歧。', type: 'opinion', sources: [0, 4] },
+        { id: 'industry-frontier-6', text: '自改进 AI 的安全哲学分裂成两条路线：Recursive 的开放式进化和 rainbow teaming 认为对抗性自我测试本身就是安全机制——两个 AI 互相攻击能暴露漏洞；SSI（Sutskever, $1B 融资 ~$5B 估值）则拒绝公开任何产品和路线图，认为自改进系统一旦启动就无法关闭，安全验证必须在封闭环境中预先完成。这两种路线代表了"开放即安全"和"封闭才安全"的根本分歧。', type: 'opinion', sources: [0, 4] },
       ],
       pros: ['资本涌入加速工程探索', '全明星团队密度罕见', '大实验室内部项目提供更可靠验证'],
       cons: ['$4.65B 估值建立在零产品零 demo 上', 'Socher 同时管理 You.com，精力分散', '关键进展不透明——公共叙事可能滞后或误导'],
@@ -218,6 +219,8 @@ const fieldMap: FieldMap = {
         { id: 'skepticism-4', text: '[认知层 · 技术树论证] Harjas 的 paraconsistent 论证：即使 LLM 永远到不了 AGI（怀疑论前提），它们仍可通过自动化研究加速发现正确的技术分支（如神经符号 AI）。你不需相信 LLM 能成 AGI，只需相信它能帮人类找到通往 AGI 的正确道路。这是怀疑论者对自己阵营做的最强 alarmist case——怀疑 LLM 恰恰是严肃对待自改进的理由。', type: 'opinion', sources: [2] },
         { id: 'skepticism-5', text: '[组织层 · 分布式知识] Dean Ball 的论证：TSMC 芯片制造能力来自 9 万互动员工，不是一个大脑的产物。要做出实际改变需要运营实验室、谈判政治、开采矿物——不只是智力问题。知识是隐性的、分布式的、嵌入组织文化的。这个论证和 Chollet 的"智能外化"一脉相承，但更聚焦工程现实而非哲学前提。', type: 'opinion', sources: [3] },
         { id: 'skepticism-6', text: '[工程层 · 可验证性约束] 所有当前自改进系统仅在有客观评估器的领域工作。在无清晰"好坏"标准的领域（战略、创意、开放科学推理），连选择压力都建立不起来。这被一些分析者视为方法论的根限而非暂时障碍——如果找不到构造改进信号的通用方法，自改进将永限于可量化子集。', type: 'opinion', sources: [4] },
+        { id: 'skepticism-7', text: '[工程层 · Model Collapse] 训练数据中的 AI 生成内容占比过高会导致模型退化——"自吞噬生成模型"（Shumailov et al., 2023）证明多代自训练后模型输出质量系统性下降。这构成了自改进的一个基础性反问：如果改进循环依赖自身的输出作为训练数据，模型是否在自我毒化？AlphaGo Zero 不受此限因为围棋有客观规则验证每一步的合法性，但 LLM 的自训练没有等价的外部 ground truth。', type: 'opinion', sources: [6] },
+        { id: 'skepticism-8', text: '[工程层 · Reward Hacking] 当一个 AI 系统优化自己的评估器时，它会找到投机取巧的方式来"得分"而不是真正提升能力——这是 Goodhart 定律的 AI 版本。例如，如果一个自改进系统用 LLM 来评价自己的输出质量，"讨好评审"可能比"真正变好"更容易。这个风险在 Agentic Auto-Research 的"LLM-as-Judge"模式中尤其突出：AI Scientist 用 LLM ensemble 做同行评审，但 LLM 评审和人类评审的一致性仅为 66-69%。', type: 'opinion', sources: [7] },
       ],
       pros: [
         '多角度约束了"爆炸叙事"——不是一种反驳而是四种（概念、速度、路径、分析单元）',
@@ -281,6 +284,25 @@ const fieldMap: FieldMap = {
       positions: [
         { side: '速度优先 (Recursive)', argument: '开放式进化和 rainbow teaming 本身就是安全机制——两个 AI 对抗性共同进化，攻击方天然会暴露防守方的漏洞。开放比封闭更安全，因为封闭系统的缺陷不可见。最快的进展也是最好的安全策略——谁先到达可自改进的 AI，谁就能定义规则。' },
         { side: '安全优先 (SSI/Sutskever)', argument: 'SSI 以 $32B 估值、零产品、零公开路线图的姿态明确拒绝速度竞争。他们的隐含假设是：自改进系统一旦启动就无法关闭，因此必须在启动前确保安全。速度和安全是 trade-off，而当前的市场竞争压力系统性地偏向速度。' },
+      ],
+      status: 'active',
+    },
+    {
+      id: 'tension-verifiers-vs-llm-judge',
+      question: '自改进的评估信号：客观验证器还是 LLM 自评？',
+      positions: [
+        { side: '客观验证器派 (AlphaEvolve 路线)', argument: '自改进的选择压力必须来自可自动计算的客观指标（benchmark 得分、编译通过/失败、数学答案正确性）。任何涉及 LLM 自评的循环都会陷入"讨好评审"而非"真正变好"——如果 AI 既能生成又能打分，它能发现的最优策略是生成让评分器打高分的内容，而不是真正更好的内容。' },
+        { side: 'LLM-as-Judge 派 (Agentic Auto-Research 路线)', argument: '许多重要问题没有客观指标。AI Scientist 用 LLM ensemble 做论文评审是实用主义的折中——一致性虽只有 66-69%，但随着 LLM 能力提升这个比例在增长。如果"需要客观评估器"是硬约束，那自改进将永远无法进入主观领域（创意、战略、美学）。LLM 自评是渐进逼近，不是完美解。' },
+      ],
+      status: 'active',
+    },
+    {
+      id: 'tension-synthetic-data',
+      question: '自改进能靠自生成数据无限循环吗？',
+      positions: [
+        { side: '可循环派 (AlphaZero 类比)', argument: 'AlphaGo Zero 完全不依赖人类棋谱，仅通过自对弈超越人类。如果 AI 能在代码、数学、芯片设计等领域定义清晰的验证规则，同样的纯自改进循环在理论上可行。自生成数据不是问题——缺乏 ground truth 验证才是。' },
+        { side: 'Model Collapse 派 (Shumailov et al., 2023)', argument: '实证表明多代自训练后模型质量系统性下降。LLM 不同于围棋——没有客观的"输赢"来裁决每一步。自生成数据中的错误和偏差会逐代放大。纯自改进循环可能不是指数增长而是指数衰减。' },
+        { side: '人机混合派 (实践共识)', argument: '当前所有生产级自改进系统都混合使用人工筛选/反馈和自动信号。AI Scientist 用 LLM 评审 + 人工最终审稿；RLHF 本质上是人机混合奖励。纯自循环在绝大多数领域目前不成立，但"需要多少人类输入"是一个连续变量而非二元开关。' },
       ],
       status: 'active',
     },
