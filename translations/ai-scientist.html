@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Co-Scientist — Google Research</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>用 AI Co-Scientist 加速科学突破</h1>
+<p style="color:#888;">Juraj Gottweis（Google Fellow）和 Vivek Natarajan（研究主管）· 2025 年 2 月 19 日</p>
+
+<div class="original-link">
+  <a href="https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/" target="_blank">原文链接 →</a>
+</div>
+
+<p>我们推出 AI co-scientist，一个基于 Gemini 2.0 构建的多智能体 AI 系统，作为虚拟科学合作者，帮助科学家生成新颖的假设和研究方案，加速科学和生物医学发现的节奏。</p>
+
+<h2>系统设计</h2>
+<p>给定科学家以自然语言描述的研究目标，AI co-scientist 会生成新颖的研究假设、详细的研究概览和实验方案。它使用一组专门化的智能体——<strong>生成、反思、排名、进化、邻近、元评审</strong>——这些智能体受到科学方法本身的启发。它们利用自动反馈循环迭代生成、评估和完善假设，形成自我改进的循环。</p>
+
+<p>科学家可以多种方式与系统交互：直接提供种子想法，或用自然语言对生成结果提供反馈。系统还使用网络搜索和专门的 AI 模型等工具来增强生成假设的根基和质量。</p>
+
+<h2>测试时计算缩放</h2>
+<p>AI co-scientist 利用测试时计算缩放来迭代推理、进化并改进输出。关键推理步骤包括基于自我对弈的科学辩论（用于生成新颖假设）、排名锦标赛（用于假设比较）和"进化"过程（用于质量改进）。系统使用 Elo 自动评估指标来驱动自我改进，更高的 Elo 评分与更高的输出质量正相关。</p>
+
+<p>在 15 个由领域专家策展的开放研究目标上，AI co-scientist 的表现超过了其他最先进的智能体和推理模型。</p>
+
+<h2>真实世界实验验证</h2>
+<p>系统在三个关键生物医学应用中得到验证：</p>
+<ul>
+  <li><strong>急性髓系白血病（AML）药物重定位</strong>：AI co-scientist 提出的新候选药物在体外实验中确认能抑制肿瘤细胞活性。</li>
+  <li><strong>肝纤维化靶点发现</strong>：系统识别出的表观遗传靶点在人类肝脏类器官中表现出显著抗纤维化活性。</li>
+  <li><strong>抗菌素耐药性机制阐释</strong>：系统独立提出了 cf-PICI 跨细菌物种存在的机制，与实验室独立发现一致。</li>
+</ul>
+
+<h2>局限与展望</h2>
+<p>AI co-scientist 代表了向 AI 辅助科学发现技术迈出的有希望的一步。它能够生成新颖、可检验的假设，通过递归自我改进随着计算量增加而提升质量，展示了加速科学和医学领域重大挑战解决的潜力。我们正通过可信测试者计划向研究机构开放该系统。</p>
+
+<div class="footer">
+  <p>原文：<a href="https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/" target="_blank">Accelerating scientific breakthroughs with an AI co-scientist — Google Research</a></p>
+  <p>论文：<a href="https://arxiv.org/abs/2502.18864" target="_blank">AI co-scientist — arXiv</a></p>
+</div>
+</article>
+</body>
+</html>

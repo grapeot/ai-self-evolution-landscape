@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeEvolve：开源进化式编码智能体，用于算法发现与优化</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+  h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<h1>CodeEvolve：开源进化式编码智能体，用于算法发现与优化</h1>
+<div class="meta">Henrique Assumpção, Diego Ferreira, Leandro Campos, Fabricio Murai · Inter Science / UFMG / WPI · 2025</div>
+<a class="original-link" href="https://arxiv.org/html/2510.14150v2" target="_blank">原文链接 →</a>
+
+<p>在本文中，我们介绍 <strong>CodeEvolve</strong>，一个开源的进化式编码智能体，它将大语言模型（LLM）与遗传算法相结合，以解决复杂的计算问题。我们的框架将强大的进化概念适配到 LLM 领域，基于最近用于通用科学发现的方法进行构建。</p>
+
+<p>CodeEvolve 采用基于岛屿的遗传算法来维持种群多样性并提高吞吐量，引入了一种新颖的<strong>基于灵感的交叉机制</strong>——利用 LLM 的上下文窗口从成功的解中组合特征，并实现了元提示策略以动态探索解空间。</p>
+
+<p>我们在 AlphaEvolve 使用的数学基准子集上进行了严格评估。结果显示，我们的方法在多个具有挑战性的问题上<strong>超越了 AlphaEvolve</strong> 的性能。为了促进协作和加速进展，我们将完整框架作为开源仓库发布。</p>
+
+<h2>方法论</h2>
+
+<p>CodeEvolve 将进化框架与大语言模型集成以优化程序。架构基于<strong>岛屿遗传算法</strong>：维护多个种群（岛屿），每个种群独立进化，并定期交换各自的最优个体。迁移步骤根据预定义的图（迁移拓扑）进行，其节点是岛屿，边决定迁移路径。</p>
+
+<p>系统包含三个关键组件：</p>
+
+<p><strong>LLM 集成生成</strong> — 我们采用不同最先进 LLM 的集成，每个模型分配一个权重。实验中使用 Google 的 GEMINI 2.5 模型集成，较快的 FLASH 模型采样概率更高，更强大但昂贵的 PRO 模型概率较低。</p>
+
+<p><strong>深度利用（Depth Exploitation）</strong> — 旨在精炼高性能解。通过基于排名的选择从当前种群中选出一个父代解，排名越高选中概率越大。LLM 集成接收该解、其父提示和 k 个最近的祖先作为上下文，进行有针对性的增量改进。</p>
+
+<p><strong>元提示探索（Meta-prompting Exploration）</strong> — 旨在促进解的多样性。从一个父代解开始，辅助 LLM 分析原始提示和解本身，生成一个新的、更丰富的提示。然后 LLM 集成使用这个新提示来生成新解，有意排除祖先链以允许模型探索全新策略。</p>
+
+<p><strong>基于灵感的交叉</strong> — 进化算法适配 LLM 的关键挑战在于设计有意义的交叉算子。我们不直接拼接代码（这常常破坏语法和语义），而是提出基于灵感的交叉：从种群中采样一组高性能"灵感"解，将它们作为额外上下文提供给 LLM 集成，鼓励模型综合多个父代解中的成功模式。</p>
+
+<h2>实验结果</h2>
+
+<p>我们在四个基准问题上进行了评估：</p>
+
+<p><strong>P1：第二自相关不等式</strong> — AlphaEvolve 得分 0.89627，<strong>CodeEvolve 得分 0.93768</strong>（提升 ↑）<br>
+<strong>P2.A：最小化最大最小距离比（16 点，2 维）</strong> — AlphaEvolve 12.88926，<strong>CodeEvolve 12.88923</strong>（提升 ↓）<br>
+<strong>P2.B：同上（14 点，3 维）</strong> — AlphaEvolve 4.16585，<strong>CodeEvolve 4.16578</strong>（提升 ↓）<br>
+<strong>P3.A：单位正方形内圆填充（26 个圆）</strong> — AlphaEvolve 2.63586，<strong>CodeEvolve 2.63596</strong>（提升 ↑）<br>
+<strong>P3.B：单位正方形内圆填充（32 个圆）</strong> — AlphaEvolve 2.93794，<strong>CodeEvolve 2.93957</strong>（提升 ↑）<br>
+<strong>P4：周长 4 的矩形内圆填充</strong> — 均分 2.36583（持平）</p>
+
+<p>我们的开源智能体不仅在六个基准中的五个上超越了闭源的 AlphaEvolve，还为此类问题的解决设立了新的最优记录。</p>
+
+<p>消融研究证实了各核心组件的贡献。不使用元提示或灵感交叉时，性能显著下降。最基础的"不进化"配置（仅用初始平凡解重复提示 LLM）效果最差，验证了迭代进化循环本身的价值。</p>
+
+<h2>结论</h2>
+
+<p>CodeEvolve 证明了开源 LLM 驱动的进化式编码智能体可以匹敌甚至超越专有系统的性能。我们将完整框架开源，包括源代码和实验结果，以促进该领域的进展和可复现研究。CodeEvolve 设计为可广泛应用于任何需要优化一个或多个可量化指标的算法问题。</p>
+
+</body>
+</html>

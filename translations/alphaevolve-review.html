@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEvolve 独立评测 — NYU</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+  h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<h1>关于 AlphaEvolve 的一些评论</h1>
+<div class="meta">Ernest Davis · 纽约大学计算机科学系 · 2025 年 6 月 2 日</div>
+<a class="original-link" href="https://cs.nyu.edu/~davise/papers/AlphaEvolveNotes.pdf" target="_blank">原文链接 →</a>
+
+<p>AlphaEvolve 是 DeepMind 新近宣布的系统，是两年前 FunSearch 的扩展。基本思路与 FunSearch 相同，但引入了大量重要的技术扩展。结果，FunSearch 只成功应用于四个数学问题，而 AlphaEvolve 已成功应用于 13 个数学问题、矩阵乘法变体问题以及若干对 Google 具有实际重要性的问题。DeepMind 已向研究社区开放了 FunSearch，但 AlphaEvolve 尚未向 Google 以外的任何人开放使用或研究。</p>
+
+<p><strong>声明：</strong>我不是数学家，也不是 AlphaEvolve 所用技术或其所解决问题的专家。如果发现错误或严重误判，恳请指正。</p>
+
+<h2>AlphaEvolve 令人印象深刻之处</h2>
+
+<p>FunSearch 发布时仅应用于四个问题，人们自然要问：它在其他问题上也能产生有用的结果吗？此后 Ellenberg 等人将其成功应用于另外两类问题。AlphaEvolve 成功解决问题的数量和广度给出了明确的肯定答案——它确实有潜力成为一种新的工具，为某些类型的优化问题提供改进方案。</p>
+
+<p>AlphaEvolve 为 Google 计算生态系统中的三个实际优化问题生成了改进方案：数据中心作业调度、大语言模型训练的矩阵乘法分块策略优化、以及硬件电路设计。这些改进带来了可衡量的效率提升——资源利用率提高 0.7%、Gemini 训练时间减少 1%、计算各方面提速 32% 和 15%。虽然我无法深入评估这些成果，但它们确实令人印象深刻。</p>
+
+<p>Novikov 等人提供了 AlphaEvolve 对 FunSearch 改进之处的表格。其中第五项——FunSearch 生成数百万样本才能找到有效代码，而 AlphaEvolve 只需要数千——看起来是一个卓越且出乎意料的改进。深入理解这一改进是如何实现的将非常有价值。</p>
+
+<h2>一些疑虑</h2>
+
+<h3>技术问题</h3>
+<p>表格中声称 FunSearch"进化 Python 代码"而 AlphaEvolve"进化任何语言"，这令人困惑。一方面，驱动 FunSearch 的 Codey LLM 本身就支持超过 20 种编程语言；另一方面，我没有找到任何实验表明 AlphaEvolve 实际生成了 Python 以外的代码。此外，对于解决这些优化问题，处理多种编程语言到底能带来什么实际优势？</p>
+
+<p>AlphaEvolve 为用户提供了大量可调节的旋钮和设置。但高度用户可配置的系统是一把双刃剑——找到正确的设置可能需要不确定的经验、洞察和实验。按"开箱即用"的方式使用时，AlphaEvolve 到底有多强大，并不清楚。</p>
+
+<h3>矩阵乘法结果的意义</h3>
+<p>AlphaEvolve 发现了一种仅用 48 次标量乘法计算两个 4×4 矩阵相乘的方法，优于 Strassen 方法所需的 49 次。但我对这些结果的实际价值持怀疑态度。从论文中看，即使相乘的是实数矩阵，AlphaEvolve 生成的方法也要求进行一些复数标量的乘法。这意味着实际所需的实数乘法次数在 50 到 144 之间，而不是 48。只有在需要大量高精度复数密集矩阵乘法的罕见情况下，AlphaEvolve 的算法才可能带来可衡量的效率提升。</p>
+
+<h3>数学结果的意义</h3>
+<p>AlphaEvolve 应用于"超过 50 个"数学问题，在 75% 的问题上至少与已知最优解持平，在 20%（即 13 个）问题上找到了更好的解。其中 7 个是初等几何问题，5 个是实分析问题，1 个是组合数学问题。这些结果对数学知识的贡献有多大？我无法判断。</p>
+
+<p>最受关注的结果是在 11 维接吻数问题上找到 593 个球体的构型（此前最优是 592）。已知的 11 维上界是 868，所以这是已知范围 0.36% 的改进。数学家有时会对更小的百分比改进感到兴奋。但对比一下：Ganzhinov 在一篇 26 页论文的一个段落中通过纯理论分析得到了 592 的值；De Laat 和 Leijenhorst 扩展了传统内点优化方法以改进 11 到 23 维的接吻数。在我这个外行看来，两种方法都比 AlphaEvolve 更数学化、更可能产生丰硕成果。</p>
+
+<h2>希望 AlphaEvolve 团队公布的信息</h2>
+<p>AlphaEvolve 团队迄今只公布了 13 个改进问题的描述，而非全部 50+ 个。为便于评估，如果给出所有问题的陈述会非常有帮助。例如，他们是否只尝试了 11 维的接吻数问题（下界与上界差距特别大），还是也尝试了其他维度？</p>
+
+<p>此外，获得这些结果需要多少人力时间、多少次不同设置的尝试、多少计算资源，这些信息也很有价值——无论对成功还是失败的尝试。</p>
+
+<h2>炒作</h2>
+<p>如同当今 AI 产品几乎不可避免的那样，公告和相关宣传伴随着炒作、误导性陈述甚至彻头彻尾的不实之词。技术论文的标题"AlphaEvolve：用于科学和算法发现的编码智能体"存在两个问题：第一，"科学"应为"数学"——没有证据表明 AlphaEvolve 对数学以外的科学有用；第二，AlphaEvolve 在某种意义上并不是一个智能体。</p>
+
+<p>Nature 新闻文章的标题"DeepMind  unveils 'spectacular' general-purpose science AI"更糟。"通用"与事实完全相反——即使在数学导向的 AI 中，AlphaEvolve 能解决的问题范围也极其狭窄。</p>
+
+</body>
+</html>

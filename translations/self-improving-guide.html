@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自我改进 AI 智能体：2026 年指南 — o-mega</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+  h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<h1>自我改进 AI 智能体：2026 年指南</h1>
+<div class="meta">Yuma Heymans · o-mega · 2026 年 3 月 26 日 · 约 46 分钟阅读</div>
+<a class="original-link" href="https://o-mega.ai/articles/self-improving-ai-agents-the-2026-guide" target="_blank">原文链接 →</a>
+
+<p>2026 年 3 月 19 日，来自 Meta、英属哥伦比亚大学、牛津大学和纽约大学的研究团队发表了一篇论文，悄然跨越了 AI 安全界多年来一直关注的阈值。他们的系统 <strong>HyperAgents</strong> 将在一个领域（机器人、论文评审）学到的自我改进策略转移到了一个全新领域（奥林匹克数学评分），取得了 <strong>imp@50 = 0.630</strong> 的成绩。而人类专家为同一任务手工设计的系统得分是 <strong>0.0</strong>——完全失败。学会了如何学习的机器，击败了试图手工设计学习过程的人类。</p>
+
+<p>这不是一个关于更好提示或更花哨框架的故事。这是一个关于 AI 智能体不再只是静态工具、而是开始学会如何变得更好的故事。研究界称之为<strong>元认知自我改进</strong>：智能体不仅修改它们的任务行为，还修改它们自己的修改过程。而这发生得比大多数从业者意识到的要快得多。</p>
+
+<h2>为什么自我改进是唯一重要的事</h2>
+<p>2026 年初的 AI 智能体领域充斥着各种框架、编排层和工作流构建工具。大多数解决的是同一个问题：如何让 LLM 访问工具并执行多步骤任务。这个问题已经基本解决了。尚未解决的问题——将研究好奇心与实际经济价值区分开来的问题——是：智能体能否在没有人重新设计它的情况下，自己变好？</p>
+
+<p>自我改进有一个硬约束：<strong>可验证性约束</strong>——AI 自我改进只在结果可客观验证的领域内可靠地工作。代码要么编译要么不编译；数学证明要么正确要么不正确；优化后的算法要么跑得更快要么不跑。在这些领域，智能体可以生成改进候选，针对明确指标评估它，如果有效就保留。但在营销文案、战略规划或关系管理等领域，没有清晰的"更好"信号。</p>
+
+<p>静态智能体第一天有 80% 的准确率，第 300 天仍然是 80%。一个自我改进的智能体从 70% 开始但每周进步一个百分点，将在十周内超过静态智能体，并持续拉大差距。复利效应改变了 AI 部署的单位经济性。</p>
+
+<h2>HyperAgents：改变游戏规则的论文</h2>
+<p>HyperAgent 是一个包含两个函数、共享一个可编辑代码库的 Python 程序。第一个函数 <code>solve_task()</code> 处理领域任务；第二个函数 <code>modify_self()</code> 分析智能体的性能并提出代码修改方案以改进它。关键的创新在于：<code>modify_self()</code> 可以修改它自己。这是<strong>元认知自我修改</strong>。系统使用 Claude Sonnet 作为冻结的基础模型，所有权重永不更新，所有改进都通过离散代码修改发生。</p>
+
+<p>论文在四个领域评估了 DGM-H：多语言编程（训练准确率从 0.140 提升到 0.340）、科学论文评审（测试准确率 0.710，对比 AI Scientist v2 的 0.63）、机器人奖励设计（从 0.060 到 0.372），以及奥林匹克数学评分——最引人注目的迁移任务。只在论文评审和机器人领域训练过的 DGM-H 智能体，被迁移到奥林匹克数学评分，获得了 <strong>imp@50 = 0.630</strong>。为此任务专门定制的人类设计的 DGM 系统得了 <strong>0.0</strong>。</p>
+
+<p>消融研究证实：元认知和开放式探索二者缺一不可。当固定元智能体（阻止它自我修改）时，改进停滞了；当移除档案库（消除种群搜索）时，进展同样微乎其微。</p>
+
+<h2>自我改进智能体全景</h2>
+<p><strong>反射（Reflection）基础</strong> — Reflexion（2023）引入了核心机制：存储在持久记忆中的语言自我反思。ExpeL 让智能体自主从成功和失败中提炼自然语言洞见。这些是"自我改进 1.0"：限于任务级改进，但最易部署。</p>
+
+<p><strong>自我对弈与强化学习</strong> — SWE-RL 让单个 LLM 在"注入 bug"和"修复 bug"两个角色间切换，在 SWE-bench 上取得了 +10.4 分的提升。SAGE 扩展到四个智能体（挑战者、规划者、求解者、评论家），并配以课程漂移预防机制。</p>
+
+<p><strong>进化式代码优化</strong> — AlphaEvolve 实现了里程碑式的成果：回收 Google 全球 0.7% 的计算资源，FlashAttention 内核加速 32.5%，在 20% 的开放数学问题上改进了已知最优解。ShinkaEvolve 和 CodeEvolve 作为开源对应物，在多个问题上超越了 AlphaEvolve。</p>
+
+<p><strong>自指涉智能体修改</strong> — SICA 消除了元智能体和目标智能体的区别，在 SWE-bench 子集上从 17% 提升到 53%。Godel Agent 在运行时通过猴子补丁动态修改自身逻辑。</p>
+
+<p><strong>自动化科学发现</strong> — AI Scientist v2 生成的一篇论文在 ICLR 研讨会评审中获得了平均 6.33 分（高于接收阈值），每篇论文成本约 15 美元。</p>
+
+<h2>安全之问</h2>
+<p>自我改进的加速意味着安全挑战也在加速。METR 发现 AI 智能体可自主完成的任务时长每 7 个月翻一番，2024-2025 年更是加速到每 4 个月。当前前沿模型 50% 可靠性的时间地平线约为 50 分钟。一年前还不到 15 分钟。曲线没有趋平。</p>
+
+<p>可验证性约束既是限制也是安全机制。在代码和数学等领域，自动验证可以阻止灾难性的错误改进。真正的危险出现在自我改进应用于缺乏清晰验证信号的领域时——智能体可能优化代理指标，而这些指标与现实世界的结果分道扬镳。</p>
+
+</body>
+</html>

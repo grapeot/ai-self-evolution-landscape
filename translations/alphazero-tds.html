@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaZero 技术解析 — Towards Data Science</title>
+<style>
+body {
+  font-family: -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.8;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #1a1a1a;
+  background: #fafafa;
+}
+h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+h2 { font-size: 1.25em; margin: 1.8em 0 0.6em; border-bottom: 1px solid #ddd; padding-bottom: 0.3em; }
+h3 { font-size: 1.1em; margin: 1.4em 0 0.4em; }
+.meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 1em 0; }
+.source-link {
+  display: inline-block;
+  margin-top: 3em;
+  padding: 0.6em 1.2em;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+.source-link:hover { background: #1d4ed8; text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>AlphaZero 国际象棋：工作原理、独特之处及其启示</h1>
+<p class="meta">Maxim Khovanskiy · Towards Data Science · 2022 年 5 月 5 日</p>
+
+<p>AlphaZero 是一个通过自我对弈和神经网络强化学习相结合来学习下棋的程序——仅需输入游戏规则，它就能从零开始学习国际象棋和围棋。它的后继者 MuZero 甚至不限于棋盘游戏，还能学习玩 Atari 合集中的一系列简单视频游戏。两者都由 DeepMind 设计。</p>
+<p>AlphaZero 特殊之处在于它实在太强了。即便是在它被训练学习的游戏中的人类职业选手，甚至是专门为其中单一游戏开发的、最先进的计算机程序，都无法匹敌它的表现。它样样精通，而且样样都精。</p>
+
+<h2>传统引擎的工作原理</h2>
+<p>从 1970 年代计算机国际象棋出现到 AlphaZero 诞生之前，几乎所有国际象棋引擎的基本架构都几乎一样。每一步棋，引擎对博弈树进行深度优先搜索（DFS），达到指定的深度：也就是计算当前位置开始的所有合法走法序列。然后，树的终端节点被赋予一个数值，表示该节点位置对白方有多好——这被称为静态评估。静态评估使用由高水平棋手社区制定的诸多启发式规则来计算，包括子力总数、棋子-格子表、王的安全和兵结构等指标。</p>
+<p>在此基础上运行极小化极大算法，从终端节点向上到根节点：对每个未评估的节点，如果是白方走则取子节点评估的最大值，黑方走则取最小值。这确保了评估过程蕴含了双方的最优玩法。</p>
+<p>最后应用 alpha-beta 剪枝算法。两个值——alpha 和 beta——在每个节点存储，分别代表白方和黑方在祖先节点中已知的最差评估结果。如果 alpha 大于等于 beta，则该节点及其分支被剪掉。这个技巧能节省大量算力而不损失准确性。</p>
+<p>传统引擎还有一大批附加改进：各种剪枝算法、开局库、残局数据库等等。但这个框架是让计算机在 1997 年 Deep Blue 击败卡斯帕罗夫、最终彻底击败人类成为最佳国际象棋选手的核心。</p>
+
+<h2>AlphaZero 的方法</h2>
+<p>2018 年 DeepMind 揭示了 AlphaZero 的内部工作原理。很快，开源克隆项目 LeelaChessZero 启动，并在 2019 年成为世界最强的引擎。</p>
+<p>AlphaZero 的核心是一个卷积神经网络，初始时被设置为返回两个随机输出：v(s)——估计从局面 s 开始玩家的获胜概率，以及 p(s)——一个向量，估计局面 s 下每个合法走法的前景。训练这个网络来接收局面 s 并预测 v(s) 和 p(s)。</p>
+<p>AlphaZero 的游戏智能体设计基于蒙特卡洛树搜索（MCTS）。MCTS 不像 DFS 那样尽可能深入地探索每个可能分支，而是探索少量分支但一直走到游戏结束。在 AlphaZero 的版本中，每一步运行一定数量的模拟（simulations）。每轮模拟执行以下步骤：</p>
+<ul>
+<li>在当前局面的所有合法走法中，选择最高产的走法——平衡探索与利用。最高产的走法最大化一个上置信界（UCB）表达式，包含平均评估得分 Q(s,a)、先验概率 P(s,a) 和访问次数 N(s,a)。</li>
+<li>执行选定的走法，递归重复，直到遇到未访问过的局面 r。此时记录 r 的评估值为 v(r)，设置 P(r) 为 p(r)。</li>
+<li>当预选数量的模拟完成后，引擎有了一个策略分布——各走法的访问次数。选择最常访问的走法作为实际下法。</li>
+</ul>
+<p>然后用这个游戏智能体自我对弈大量局数（AlphaZero 用了 25,000 局）。每一步产生一个训练样本：走法前的局面作为输入，最终结果和策略向量作为输出。新的神经网络在数据上训练后，与旧网络进行 400 局对抗。如果新网络的胜率超过 55%，就用它来构建新一代的智能体；否则保留旧网络。整个过程重复 200 次。</p>
+
+<h2>启示</h2>
+<p>AlphaZero 选择造成最高估计最终胜率的走法，而传统引擎选择在固定深度后最有利局面的走法。因此可以预期 AlphaZero 更喜欢看似短期不利但能增加最终胜率的走法。</p>
+<p>在一个真实的 AlphaZero 对弈局例中，AlphaZero 将其 h 兵向前推进，表面上让出了对黑方王翼防线施压的机会。直到 8 步之后意图才显现：通过一系列调动，它几乎迫使黑后一路退回到 h8，然后用车锁住通道。黑后对整个棋局的剩余部分形同虚设。这种挺进侧翼兵到棋盘尽头的想法从未被特级大师认真对待，但自从 AlphaZero 证明了这一概念后，五届世界冠军马格努斯·卡尔森等顶级选手也经常使用这一想法。</p>
+<p>抽象概念方面，结果则好坏参半。AlphaZero 展示了对长期计划的抽象理解，但也在人类能轻松解答的谜题上犯错。由此得出的结论是：通过使用神经网络，机器可以被训练来掌握以前属于人类专属的概念，如非常长期的规划。神经网络架构在人类同样有优势的方面改进最多——创造力和长期思考。因此，或许神经网络可以在那些人类仍比机器有优势的领域取得新突破，即使机器在这些领域整体上更胜一筹。然而，在如抽象思维等更通用的智能方面，神经网络距离人类还有很大距离。</p>
+<p>人工智能显然在以令人瞠目的速度发展，但要达到它的全部潜力，还有很长的路要走。</p>
+
+<a class="source-link" href="https://towardsdatascience.com/alphazero-chess-how-it-works-what-sets-it-apart-and-what-it-can-tell-us-4ab3d2d08867/" target="_blank">原文链接 →</a>
+</body>
+</html>

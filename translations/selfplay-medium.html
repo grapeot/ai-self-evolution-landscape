@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>策略游戏中的自我对弈强化学习 — Amit Yadav</title>
+<style>
+body {
+  font-family: -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.8;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #1a1a1a;
+  background: #fafafa;
+}
+h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+h2 { font-size: 1.25em; margin: 1.8em 0 0.6em; border-bottom: 1px solid #ddd; padding-bottom: 0.3em; }
+h3 { font-size: 1.1em; margin: 1.4em 0 0.4em; }
+.meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 1em 0; }
+.source-link {
+  display: inline-block;
+  margin-top: 3em;
+  padding: 0.6em 1.2em;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+.source-link:hover { background: #1d4ed8; text-decoration: none; }
+ul { padding-left: 1.5em; }
+li { margin: 0.4em 0; }
+</style>
+</head>
+<body>
+<h1>策略游戏中的自我对弈强化学习</h1>
+<p class="meta">Amit Yadav · Biased-Algorithms · 2024 年 10 月 7 日</p>
+
+<h2>自我对弈强化学习是什么</h2>
+<p>想象一下：你坐在世界上最伟大的棋手对面——但它不是人类。它是一个通过与自己下棋学会每一步策略的人工智能。这听起来像是未来之物，但正在发生，全靠自我对弈强化学习。</p>
+<p>强化学习（RL）是一种让智能体通过与环境的互动以及获得奖励或惩罚形式的反馈来学习的机器学习方法。加入自我对弈后，智能体通过与自己对弈来训练，随时间推移演化自己的策略，无需任何人类输入。AI 正是以这种方式主导了国际象棋、围棋乃至现代电子游戏等复杂策略游戏。</p>
+<p>策略游戏是理想的 AI 测试场。国际象棋或围棋这类游戏需要深远的洞察力、规划和适应能力。每一步棋都是通向未来胜利或失败的经过计算的一步。如果 AI 能掌握这种复杂程度的游戏，它就展示了真正的决策能力——其影响远超游戏世界。</p>
+
+<h2>自我对弈 RL 的核心概念</h2>
+<p>在传统强化学习中，智能体通过与环境的互动来学习——做决定、接收反馈、随时间改进。但当没有明确的对手可以向其学习时，自我对弈就派上了用场。智能体与自己对弈，每赢一场和每输一场都从中学习。这创造了一个强大的反馈循环：随着智能体变得更好，它为未来的自己创造了更难的挑战。下的越多，它变得越好。</p>
+<p>两个最著名的自我对弈 RL 例子是 AlphaZero 和 MuZero。AlphaZero 纯粹通过自我对弈从零开始自学国际象棋和围棋，没有任何人类示例或策略。MuZero 更进一步，在不需要事先知道游戏规则的情况下学习。自我对弈还被应用于机器人技术和金融等领域，智能体可以自主模拟和优化策略。</p>
+
+<h2>自我对弈在策略游戏中的优势</h2>
+<ul>
+<li><strong>多样化的策略：</strong>由于智能体与自己下棋，它会接触到各种各样的战术和反战术，不依赖外部数据或人类策略。</li>
+<li><strong>持续改进：</strong>每局游戏都是一次学习体验。智能体不断优化其方法，推动自身极限。</li>
+<li><strong>无需人类：</strong>智能体不需要老师。它自学成才，非常适合人类专业知识有限的复杂游戏。</li>
+</ul>
+
+<h2>策略游戏的特征与挑战</h2>
+<p>策略游戏对 AI 提出几个挑战：</p>
+<ul>
+<li><strong>长期规划和多步决策：</strong>AI 必须提前规划很多步，应对分叉结果和无数可能性。</li>
+<li><strong>对手行动的不可预测性：</strong>对手不按固定脚本行动，AI 必须快速适应。</li>
+<li><strong>巨大的状态和动作空间：</strong>策略游戏通常有天文数字般大的可能状态和动作，AI 必须在其中做出明智选择。</li>
+</ul>
+<p>传统 RL 在这些环境中难以应对巨大的状态空间、动态环境以及稀疏的奖励（AI 直到游戏结束才得到胜负反馈）。</p>
+<p>自我对弈通过让智能体成为自己的对手来规避这些问题。由于智能体与不同技能水平和自己不同版本的对手对弈，它自然地学会适应各种不可预测的情况。通过蒙特卡洛树搜索（MCTS）等技术，自我对弈可以高效地探索巨大的状态空间。</p>
+
+<h2>关键技术</h2>
+<p><strong>探索 vs 利用：</strong>自我对弈中的关键平衡。如果智能体只利用已知策略，会陷入窠臼；但探索太多则浪费时间。自我对弈通过不断推动智能体测试新策略来优化这一平衡。</p>
+<p><strong>策略梯度方法：</strong>PPO（近端策略优化）和 TRPO（信任区域策略优化）帮助智能体通过随时间更新策略来逐步改进决策。</p>
+<p><strong>蒙特卡洛树搜索（MCTS）：</strong>MCTS 是 AlphaZero 和 MuZero 的核心技术。它像一棵决策树，AI 模拟不同的走法序列，然后用这些模拟的结果来决定最有希望的路径。在庞大复杂的环境中，MCTS 让智能体专注于最相关和有前途的走法，高效导航巨大的状态空间。</p>
+<p><strong>课程学习：</strong>智能体初始时面对较弱的自己，然后逐渐面对更强的对手。这种可控的难度递增确保智能体在应对更复杂策略之前打好基础。</p>
+
+<h2>实际应用与成功案例</h2>
+<p><strong>AlphaZero：</strong>从零知识开始，不依赖人类输入，仅通过学习规则和自己对弈，就在数小时内超越人类冠军。从 AlphaGo 到 AlphaZero 的进化是一个里程碑：AlphaGo 最初需要人类专家数据进行训练，而 AlphaZero 完全抛弃了这一需求。</p>
+<p><strong>MuZero：</strong>更进一步，不需要事先知道游戏规则。它边玩边学——通过试错构建环境的内在模型——使其能应用于更广泛的环境，包括规则预定义或不断变化的现实世界场景。</p>
+<p><strong>其他项目：</strong>OpenAI Five 在 Dota 2 中通过自我对弈开发了人类玩家无法预测的策略。DeepMind 的星际争霸 II AI 使用自我对弈来掌握实时决策和长期策略。自我对弈 RL 也正在进入金融（AI 在波动市场中通过自我竞争来学习）、机器人技术和商业决策等领域。</p>
+
+<h2>前沿与未来方向</h2>
+<p><strong>多智能体自我对弈：</strong>多个 AI 智能体在同一环境中合作或竞争。它们不仅从自己的行动中学习，还通过观察和回应其他智能体的行动来学习，创造更微妙和适应性更强的 AI。</p>
+<p><strong>超越游戏：</strong>自动驾驶汽车使用自我对弈来模拟无数驾驶场景；机器人练习任务如组装产品；网络安全系统通过模拟对自身的攻击来学习防御。</p>
+<p><strong>元学习：</strong>不仅仅是学习特定任务，而是学习如何学习。在自我对弈中，智能体可以将其经验从一个场景泛化到许多其他场景，无需从头开始就能适应新领域。</p>
+<p>自我对弈强化学习的妙处在于持续学习的旅程。智能体不仅在玩——它在演化、适应，每一步都变得更聪明。</p>
+
+<a class="source-link" href="https://medium.com/biased-algorithms/self-play-reinforcement-learning-for-strategic-games-886cf4b9baf8" target="_blank">原文链接 →</a>
+</body>
+</html>

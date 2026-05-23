@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOPE 架构详解 — AI Papers Academy</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>Google Nested Learning 详解：Hope 架构、持续学习与冻结 LLM 的终结</h1>
+
+<div class="original-link">
+  <a href="https://aipapersacademy.com/nested-learning-hope/" target="_blank">原文链接 →</a>
+</div>
+
+<p>本文拆解 Google 的 Nested Learning 论文和 Hope 架构——一种旨在克服灾难性遗忘的 LLM 持续学习新方法。</p>
+
+<h2>引言：现代 AI 的记忆局限</h2>
+<p>今天最大的 AI 局限或许不是智力，而是记忆。当前模型在大规模数据集上训练一次，然后作为固定系统部署，一旦训练结束就不再学习。它们被冻结在时间中。即便能在对话内适应，那种学习也不会持久。</p>
+
+<p>过去几年，Transformer 架构推动了 LLM 的进步，但它没有改变一个根本性的约束：模型在训练后不会继续学习。试图持续更新通常会遭遇灾难性遗忘——新学习覆盖已有知识。</p>
+
+<h2>Nested Learning：受大脑启发的范式</h2>
+<p>人脑在持续学习方面极其高效。论文强调了两大关键特征：<strong>神经可塑性</strong>（大脑根据新经验改变自身的能力）和<strong>脑振荡</strong>（不同频率的神经活动模式——高频支持快速处理，低频关联长期记忆巩固）。相比之下，深度学习模型在训练期间以单一频率更新所有参数。</p>
+
+<h2>神经学习模块（NLM）：Hope 的核心构件</h2>
+<p>标准 Transformer 的层是静态的，而 NLM 更像一个微型学生——它将传入信息视为必须学习压缩和内化的上下文流，通过解决自身的局部优化问题来实现。每个 NLM 有三个关键属性：自己的目标函数、自己的学习率、自己的更新频率。更新频率的概念受到脑振荡的启发——高频模块每几个 token 就更新以捕捉即时模式，低频模块等到积累数千甚至数百万 token 后才将信息巩固到权重中。</p>
+
+<h2>Hope 高层架构</h2>
+<p>一个 Hope 层由两大组件构成：<strong>Self-Modifying Titans</strong>（处理即时上下文，取代注意力机制）和<strong>连续统记忆系统（CMS）</strong>（由多个按不同频率更新的 NLM 组成）。数据先经过快速更新模块，再逐步传递到慢速模块。</p>
+
+<p>在标准 Transformer 中，注意力之后是前馈网络。在 Hope 中，前馈网络被 CMS 取代。由于各模块以不同频率更新，知识不会在所有地方同时改变——如果某个模块丢失了信息，知识仍然存在于其他尚未更新的模块中，这为重要信息提供了安全网。</p>
+
+<h2>Self-Modifying Titans 深入解析</h2>
+<p>Titan 模块的处理分为两条通路：<strong>检索通路</strong>（产生当前输出）和<strong>自我修改通路</strong>（更新系统自身）。在检索通路中，查询从记忆模块中检索最相关的信息。在自我修改通路中，模块使用 L2 回归损失来记忆输入序列。更关键的是，优化器本身——更新记忆的机制——也是可学习的：模型动态生成自己的学习率和衰减因子。</p>
+
+<h2>实验结果</h2>
+<p>在 Needle-In-Haystack 任务中，Hope 明显优于 Transformer。在语言建模和常识推理基准上，Hope 在 7.6 亿和 13 亿参数规模下均取得最佳平均性能。在持续学习基准上，Hope 也优于现有的持续学习方法。</p>
+
+<div class="footer">
+  <p>原文：<a href="https://aipapersacademy.com/nested-learning-hope/" target="_blank">Google Nested Learning Explained: Hope Architecture — AI Papers Academy</a></p>
+  <p>论文：<a href="https://arxiv.org/abs/2512.24695" target="_blank">Nested Learning: The Illusion of Deep Learning Architectures</a></p>
+</div>
+</article>
+</body>
+</html>

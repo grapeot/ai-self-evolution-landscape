@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当 AI 开始构建自己 — TechCrunch (2026)</title>
+<style>
+body {
+  font-family: -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.8;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #1a1a1a;
+  background: #fafafa;
+}
+h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+.meta { color: #666; font-size: 0.9em; margin-bottom: 2em; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 1em 0; }
+.q { color: #555; font-weight: bold; }
+.source-link {
+  display: inline-block;
+  margin-top: 3em;
+  padding: 0.6em 1.2em;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+.source-link:hover { background: #1d4ed8; text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>当 AI 开始构建自己</h1>
+<p class="meta">Russell Brandom · TechCrunch · 2026 年 5 月 14 日</p>
+
+<p>Richard Socher 在 AI 领域已是重要人物多年，最为人知的是创立了早期聊天机器人初创公司 You.com，以及之前在 ImageNet 上的工作。如今，他加入了新一代研究型 AI 初创公司的行列，创立了 Recursive Superintelligence（递归超级智能），这家位于旧金山的公司于周三以 6.5 亿美元融资正式走出隐身模式。</p>
+
+<p>与 Socher 一同加入这一新冒险的还有一批杰出的 AI 研究者，包括 Peter Norvig 和 Cresta 联合创始人 Tim Shi。他们正在共同打造一个递归自我改进的 AI 模型——能够自主识别自身弱点并重新设计来修复它们，无需人类介入——这是当代 AI 研究中一个长期追求的目标。</p>
+
+<p>我在发布后通过 Zoom 与他进行了交谈，探讨了 Recursive 独特的技术路线，以及为什么他不认为这个新项目属于"新实验室"（neolab）——这个非正式术语指向新一代优先研究而非构建产品的 AI 初创公司。以下访谈经过编辑以保证长度和清晰度。</p>
+
+<p><span class="q">问：我们最近听到了很多关于递归的说法！这似乎是不同实验室的共同目标。你们独特的方法是什么？</span></p>
+<p>我们的独特之处在于使用开放结局（open-endedness）来达成递归自我改进，这是还没有人实现的。对很多人来说这是一个难以企及的目标。很多人已经假设当你做自动研究时就会发生递归——你可以让 AI 去改进某些其他东西，可能是机器学习系统，或者你写的一封信，诸如此类。但这不是递归自我改进，这只是改进。</p>
+<p>我们的主要关注点是在规模上构建真正的递归自我改进超级智能，这意味着研究理念的构思、实施和验证的整个过程都将是自动化的。首先它会自动化 AI 研究思路，最终任何种类的研究思路，甚至包括物理领域。但在 AI 作用于自身时尤为强大，它在发展一种对自身不足的新式自我认知。</p>
+
+<p><span class="q">问：你用了"开放结局"这个词——它有特定的技术含义吗？</span></p>
+<p>有的。实际上，我们的一位联合创始人 Tim Rocktäschel 曾在 Google DeepMind 领导开放结局和自我改进团队，特别是在世界模型 Genie 3 上做了大量工作，那就是开放结局的一个很好的例子。你可以告诉它任何概念、任何世界、任何智能体，它就创造出来了，而且是可交互的。</p>
+<p>在生物进化中，动物适应环境，然后其他动物对这些适应进行反适应。这个过程可以持续进化数十亿年，有趣的事情不断发生——人类就是这样在头部演化出眼睛的。</p>
+<p>另一个例子是来自 Tim 另一篇论文的"彩虹团队"（rainbow teaming）。你听说过红队测试吗？红队测试在 LLM 语境下也要做：基本上你试图让 LLM 告诉你如何制造炸弹，你要确保它不会那么做。人类可以花很长时间想出 AI 不应该说什么的有趣例子。但如果你用第二个 AI 来测试第一个 AI，让第二个 AI 的任务是让第一个 AI 说出所有可能的坏话，然后它们可以来回迭代数百万次——实际上你可以让两个 AI 共同进化。一个不断攻击另一个，从多个角度出招，这就是"彩虹"的由来。然后你可以给第一个 AI 接种疫苗，变得越来越安全。这是 Tim Rocktäschel 的想法，现在已被所有主要实验室采用。</p>
+
+<p><span class="q">问：你如何知道它什么时候完成？我猜它永远不会完成。</span></p>
+<p>其中一些东西永远不会完成。你总是可以变得更聪明，总是可以在编程和数学等方面变得更好。智能有一些上限——我现在正在尝试将之形式化——但它们天文数字般巨大。我们离这些上限还很远。</p>
+
+<p><span class="q">问：作为一个"新实验室"，你们应该是在做主要实验室不做的事情。这里的含义是你们认为主要实验室按目前的路走不到 RSI（递归自我改进）。这样说公平吗？</span></p>
+<p>我不能评论他们在做什么，但我确实认为我们的方法不同。我们真正拥抱了开放结局的概念，我们的团队完全专注于这一愿景。团队已经在这方面研究和发表了近十年的论文，并且有将领域显著向前推进、交付真正产品的记录。Tim Shi 把 Cresta 建成了独角兽。Josh Tobin 是 OpenAI 最早的一批人，最终领导了 Codex 团队和深度研究团队。</p>
+<p>其实我有时对这个"新实验室"类别有点纠结。我觉得我们不只是一个实验室。我想成为一个真正可行的公司，有人们喜欢使用的出色产品，对人类产生积极影响。</p>
+
+<p><span class="q">问：你们什么时候计划发布第一个产品？</span></p>
+<p>我想了很多。团队取得了很大进展，我们可能实际上会把时间线从最初假设的提前。但没错，会有产品，你需要等几个季度，不是几年。</p>
+
+<p><span class="q">问：关于递归自我改进的一个想法是，一旦我们有了这种系统，算力就成为唯一重要的资源。系统运行得越快，改进得越快，没有外部的人类活动能真正改变这一点。所以竞赛变成了"我们能往里面扔多少算力"。你认为是这样吗？</span></p>
+<p>算力不容低估。我认为在未来，一个真正重要的问题是：人类愿意花多少算力来解决哪些问题？这里有癌症，那边有病毒——你先解决哪个？你愿意给它多少算力？这最终变成了资源分配的问题。它将成为世界上最大的问题之一。</p>
+
+<a class="source-link" href="https://techcrunch.com/2026/05/14/what-happens-when-ai-starts-building-itself/" target="_blank">原文链接 →</a>
+</body>
+</html>

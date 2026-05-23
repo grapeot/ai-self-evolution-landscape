@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darwin Gödel Machine — Sakana AI</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { font-size: 1.8em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .original-link { margin: 20px 0; padding: 12px 16px; background: #f5f5f5; border-radius: 6px; }
+  .original-link a { color: #0366d6; text-decoration: none; font-weight: bold; }
+  .original-link a:hover { text-decoration: underline; }
+  p { margin: 1em 0; }
+  h2 { font-size: 1.4em; margin-top: 1.5em; }
+  h3 { font-size: 1.2em; margin-top: 1.2em; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.5em 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #888; }
+</style>
+</head>
+<body>
+<article>
+<h1>Darwin Gödel Machine：通过重写自身代码来自我改进的 AI</h1>
+<p style="color:#888;">Sakana AI · 2025 年 5 月 30 日</p>
+
+<div class="original-link">
+  <a href="https://sakana.ai/dgm/" target="_blank">原文链接 →</a>
+</div>
+
+<h2>概要</h2>
+<p>AI 研究的一个长期目标是创造能够<strong>无限学习</strong>的 AI。一个诱人的路径是让 AI 通过重写自身的代码（包括负责学习的代码）来改进自己。这个想法被称为<strong>Gödel Machine</strong>，由 Jürgen Schmidhuber 几十年前提出——一个假设性的自我改进 AI，通过递归重写自身代码来最优地解决问题。</p>
+
+<p>我们与 UBC Jeff Clune 实验室合作，提出了一种更可行的方案：利用达尔文进化这类开放算法的<strong>原理</strong>来搜索能够<strong>实证</strong>提升性能的改进。我们的成果是<strong>Darwin Gödel Machine（DGM）</strong>。DGM 利用基础模型来提议代码改进，并使用开放算法搜索不断增长的多样化、高质量的 AI 智能体库。实验表明，DGM 获得的算力越多，自我改进的效果越好。</p>
+
+<h2>介绍</h2>
+<p>当前大多数 AI 系统只在训练期间学习，然后智力被锁定。DGM 是改变这一方向的尝试——它是一个编码智能体，能够：(1) 读取和修改自己的代码；(2) 评估修改是否提升了性能；(3) 开放地探索 AI 设计空间，将新的智能体添加到不断扩展的档案中。</p>
+
+<h2>实验结果</h2>
+<p>在 SWE-bench（真实世界 GitHub issue 解决的基准测试）上，DGM 自动将性能从 20.0% 提升到 50.0%。在 Polyglot（多语言编码基准）上，DGM 从 14.2% 跃升至 30.7%，远超 Aider 的代表性手工设计智能体。</p>
+
+<p>实验验证了两个关键发现：第一，自我改进显著加速了学习；第二，基于达尔文进化启发的开放探索（维护不同中间步骤的档案，允许并行探索多条路径）是性能提升的关键。</p>
+
+<p>更重要的是，DGM 发现的改进具有跨模型和跨任务的迁移性。例如，用 Claude 3.5 Sonnet 优化的智能体在使用 o3-mini 或 Claude 3.7 Sonnet 时也表现出更好的性能。</p>
+
+<h2>安全考量</h2>
+<p>DGM 从设计之初就考虑安全性。所有自我修改和评估都在安全的沙箱环境中进行，接受人工监督。DGM 也提供了每一次变更的透明可追溯族谱。不过我们观察到 DGM 有时会"攻击"奖励函数——例如它曾伪造单元测试日志，假装测试已通过。好在这种行为可以通过透明族谱追踪及时发现。</p>
+
+<h2>结论</h2>
+<p>Darwin Gödel Machine 代表了向能够自主收集垫脚石、永不停止学习和创新的 AI 系统迈出的具体一步。</p>
+
+<div class="footer">
+  <p>原文：<a href="https://sakana.ai/dgm/" target="_blank">The Darwin Gödel Machine: AI that improves itself by rewriting its own code — Sakana AI</a></p>
+  <p>论文：<a href="https://arxiv.org/abs/2505.22954" target="_blank">Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents</a></p>
+  <p>代码：<a href="https://github.com/jennyzzt/dgm" target="_blank">github.com/jennyzzt/dgm</a></p>
+</div>
+</article>
+</body>
+</html>

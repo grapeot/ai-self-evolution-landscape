@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoML-Zero：进化出会学习的代码 — Google Research Blog</title>
+<style>
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.8; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  .original-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #e8f0fe; border-radius: 6px; color: #1a73e8; text-decoration: none; font-size: 0.9rem; }
+  .original-link:hover { background: #d2e3fc; }
+  p { margin: 1em 0; text-align: justify; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<h1>AutoML-Zero：进化出会学习的代码</h1>
+<div class="meta">Esteban Real 与 Chen Liang · Google Research, Brain Team · 2020 年 7 月 9 日</div>
+<a class="original-link" href="https://research.google/blog/automl-zero-evolving-code-that-learns/" target="_blank">原文链接 →</a>
+
+<p>机器学习（ML）近年来取得了巨大成功，这得益于深度神经网络等 ML 算法——而这些算法本身是经过多年专家研究才被发现的。这种研究难度催生了 <strong>AutoML</strong>（自动机器学习），一个旨在自动化设计 ML 算法的领域。到目前为止，AutoML 主要通过组合复杂的手工设计组件来构建解决方案——典型的例子是神经架构搜索（NAS），它使用卷积、批归一化、Dropout 等复杂层自动构建神经网络。</p>
+
+<p>但 AutoML 还有另一种思路：<strong>从头开始搜索完整的算法</strong>。这极具挑战性，因为它需要探索广阔而稀疏的搜索空间，但它有巨大的潜力——它不受已有知识的偏见限制，有可能发现全新且更好的 ML 架构。打个比方：如果你要从头建造一所房子，你的灵活性远大于只用预制房间来拼装。然而，从头设计的难度也大得多，因为砖和砂浆的组合方式远远多于预制房间的设计方案。</p>
+
+<p>我们的最新论文（ICML 2020 发表）证明，<strong>从头进化出 ML 算法是可行的</strong>。我们提出的方法名为 <strong>AutoML-Zero</strong>，从空程序开始，仅使用基本数学运算作为构建块，运用进化方法自动寻找完整 ML 算法的代码。</p>
+
+<h2>从零进化学习算法</h2>
+<p>我们使用经典进化方法的一种变体来搜索算法空间。一个种群从空程序开始初始化，然后通过重复循环进化，产生越来越好的学习算法。在每个循环中，随机选择两个模型进行竞争，准确率更高的模型成为"父代"。父代克隆自己产生"子代"，然后对子代进行<strong>变异</strong>——即随机修改代码，比如任意插入、删除或修改一行代码。变异后的算法在图像分类任务上接受评估。</p>
+
+<h2>探索困难的搜索空间</h2>
+<p>与之前的 AutoML 工作相比，AutoML-Zero 的搜索空间极其稀疏——一个精确算法可能只有 1/10¹² 的概率被随机找到。这是因为提供给算法的构建块非常基础，只包括变量赋值、加法和矩阵乘法等基本操作。在这样的环境中，随机搜索无法在合理时间内找到解，但进化方法的速度可以快数万倍。</p>
+
+<p>尽管搜索空间稀疏，进化搜索仍然随着时间的推移发现越来越复杂和有效的技术。最初出现的是最简单的算法——带有硬编码权重的线性模型。随着时间的推移，<strong>随机梯度下降（SGD）</strong> 被"发明"出来学习权重——尽管梯度本身并未作为构建块提供。虽然最初的 SGD 有缺陷，但它很快被修复，引发了一系列预测和学习算法的改进。</p>
+
+<h2>进化出的算法</h2>
+<p>最终算法包含多种技术，如噪声注入（数据增强）、双线性模型、梯度归一化和权重平均，其提升还能迁移到搜索时未使用的数据集上。</p>
+
+<p>通过更多实验，我们证明了可以通过控制"栖息地"（即进化过程评估算法适应度的任务）来引导进化搜索。例如，当数据量减少时，<strong>Noisy ReLU</strong> 会出现以帮助正则化；当训练步数减少时，学习率衰减会出现以实现更快的收敛。</p>
+
+<h2>结论</h2>
+<p>我们认为这是初步工作。我们尚未进化出根本性的新算法，但令人鼓舞的是进化出的算法可以超越搜索空间中存在的简单神经网络。目前搜索过程需要大量计算。随着未来硬件规模扩大和搜索方法效率提高，搜索空间将变得更包容，结果也会改善。我们对发现新型机器学习算法的前景感到兴奋。</p>
+
+</body>
+</html>
